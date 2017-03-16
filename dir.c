@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 17:33:13 by dchirol           #+#    #+#             */
-/*   Updated: 2017/03/16 15:14:29 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/03/16 15:21:56 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void ft_mode(mode_t n)
 	}
 }
 
-void	ft_optionL(DIR *dir)
+void	ft_option(DIR *dir, t_options options)
 {
 	struct dirent 	*read;
 	struct stat stats;
@@ -60,31 +60,37 @@ void	ft_optionL(DIR *dir)
 
 	while ((read = readdir(dir)))
 	{
-		stat(read->d_name, &stats);
-		if (read->d_type == 4)
-			ft_putchar('d');
-		else if (read->d_type == 8)
-			ft_putchar('-');
-		else if (read->d_type == 10)
-			ft_putchar('l');
-		else
-			ft_putnbr(read->d_type);
-		ft_mode(stats.st_mode);
-		ft_putstr("\t");
-		ft_putnbr(stats.st_nlink);
-		ft_putstr("\t");
-		ft_putstr(getpwuid(stats.st_uid)->pw_name);
-		ft_putstr("  ");
-		ft_putstr(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
-		ft_putstr("\t");
-		ft_putnbr(stats.st_size);
-		ft_putstr("\t");
-		ft_putdate(ctime(&stats.st_mtime));
-		ft_putstr("\t");
-		//ft_putnbr(stats.st_mtime);
-		//ft_putstr(" ");
-		ft_putstr(read->d_name);
-		ft_putchar('\n');
+		if (read->d_name[0] == '.' && options.a == 1)
+		{
+			if (options.l == 1)
+			{
+				if (read->d_type == 4)
+					ft_putchar('d');
+				else if (read->d_type == 8)
+					ft_putchar('-');
+				else if (read->d_type == 10)
+					ft_putchar('l');
+				else
+					ft_putnbr(read->d_type);
+				stat(read->d_name, &stats);
+				ft_mode(stats.st_mode);
+				ft_putstr("\t");
+				ft_putnbr(stats.st_nlink);
+				ft_putstr("\t");
+				ft_putstr(getpwuid(stats.st_uid)->pw_name);
+				ft_putstr("  ");
+				ft_putstr(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
+				ft_putstr("\t");
+				ft_putnbr(stats.st_size);
+				ft_putstr("\t");
+				ft_putdate(ctime(&stats.st_mtime));
+				ft_putstr("\t");
+				//ft_putnbr(stats.st_mtime);
+				//ft_putstr(" ");
+			}
+			ft_putstr(read->d_name);
+			ft_putchar('\n');
+		}
 	}
 	//closedir(dir);
 }
@@ -108,7 +114,7 @@ int main(int ac, char **av)
 		dir = opendir(".");
 	else 
 		dir = opendir(av[1]);
-	ft_optionL(dir);
+	ft_option(dir);
 	while ((read = readdir(dir)))
 	{
 		if (!(read->d_name[0] == '.'))
