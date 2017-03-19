@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 17:33:13 by dchirol           #+#    #+#             */
-/*   Updated: 2017/03/16 15:21:56 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/03/19 18:02:36 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,76 +52,101 @@ void ft_mode(mode_t n)
 	}
 }
 
-void	ft_option(DIR *dir, t_options options)
+void ft_optl(struct dirent *read, t_options options, char *av)
+{
+	struct stat stats;
+	char *tmp;
+
+	if (read->d_type == 4)
+		ft_putchar('d');
+	else if (read->d_type == 8)
+		ft_putchar('-');
+	else if (read->d_type == 10)
+		ft_putchar('l');
+	else
+		ft_putnbr(read->d_type);
+	tmp = ft_strjoin(av, "/");
+	stat(ft_strjoin(tmp, read->d_name), &stats);
+	ft_mode(stats.st_mode);
+	ft_putstr("\t");
+	ft_putnbr(stats.st_nlink);
+	ft_putstr("\t");
+	ft_putstr(getpwuid(stats.st_uid)->pw_name);
+	ft_putstr("  ");
+	ft_putstr(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
+	ft_putstr("\t");
+	ft_putnbr(stats.st_size);
+	ft_putstr("\t");
+	ft_putdate(ctime(&stats.st_mtime));
+}
+
+void	ft_ls(DIR *dir, t_options options, char *av)
 {
 	struct dirent 	*read;
-	struct stat stats;
-	struct passwd *psw;
+	int 			flag;
 
+	flag = 0;
 	while ((read = readdir(dir)))
 	{
-		if (read->d_name[0] == '.' && options.a == 1)
+		if ((read->d_name[0] == '.' && options.a == 1)
+			|| options.a == 1 || (options.a == 0 && read->d_name[0] != '.'))
 		{
-			if (options.l == 1)
-			{
-				if (read->d_type == 4)
-					ft_putchar('d');
-				else if (read->d_type == 8)
-					ft_putchar('-');
-				else if (read->d_type == 10)
-					ft_putchar('l');
-				else
-					ft_putnbr(read->d_type);
-				stat(read->d_name, &stats);
-				ft_mode(stats.st_mode);
-				ft_putstr("\t");
-				ft_putnbr(stats.st_nlink);
-				ft_putstr("\t");
-				ft_putstr(getpwuid(stats.st_uid)->pw_name);
-				ft_putstr("  ");
-				ft_putstr(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
-				ft_putstr("\t");
-				ft_putnbr(stats.st_size);
-				ft_putstr("\t");
-				ft_putdate(ctime(&stats.st_mtime));
-				ft_putstr("\t");
-				//ft_putnbr(stats.st_mtime);
-				//ft_putstr(" ");
-			}
+			if (options.l)
+				ft_optl(read, options, av);
+			ft_putchar('\t');
 			ft_putstr(read->d_name);
-			ft_putchar('\n');
+			if (options.l)
+				ft_putchar('\n');
+			if (options.R && read->d_type == 4 && 
+				   !(read->d_name[0] == '.' && read->d_name[1] == '\0')
+				&& !(read->d_name[0] == '.' && read->d_name[1] == '.' && read->d_name[2] == '\0')
+				&& !(read->d_name[0] == '.' && read->d_name[1] == 'g'))
+				flag = 1;
+			//ft_putchar('\t');
+		}	
+	}
+//	closedir(dir);
+	ft_putchar('\n');
+	if (flag)
+		{
+			closedir(dir);
+			dir = opendir(av);
+		while ((read = readdir(dir)))
+		{
+			if (read->d_type == 4 && 
+				   !(read->d_name[0] == '.' && read->d_name[1] == '\0')
+				&& !(read->d_name[0] == '.' && read->d_name[1] == '.' && read->d_name[2] == '\0')
+				&& !(read->d_name[0] == '.' && read->d_name[1] == 'g'))
+			{
+				ft_putstr("./");
+				ft_putstr(read->d_name);
+				ft_putchar('\n');
+				ft_ls(opendir(read->d_name), options, av);	
+			}
 		}
 	}
-	//closedir(dir);
+	
 }
 
 int main(int ac, char **av)
 {
 	DIR 	*dir;
-	struct dirent 	*read;
 	t_options options;
+	int i;
 
 	options = create_struct();
-	get_options(av, &options);
-	add_option('R', &options);
-	printf("R %d\n", options.R);
-	printf("r %d\n", options.r);
-	printf("t %d\n", options.t);
-	printf("l %d\n", options.l);
-	printf("a %d\n", options.a);
-	printf("PARSING OK\n");
-	if (!av[1])
-		dir = opendir(".");
-	else 
-		dir = opendir(av[1]);
-	ft_option(dir);
-	while ((read = readdir(dir)))
+	i = get_options(av, &options);
+	if (i == ac)
 	{
-		if (!(read->d_name[0] == '.'))
-		{
-			ft_putstr(read->d_name);
-			ft_putchar('\t');
-		}
+		dir = opendir(".");
+		ft_ls(dir, options, ".");
+	}
+	while (av[i])
+	{
+		dir = opendir(av[i]);
+		ft_ls(dir, options, av[i]);
+		ft_putstr("\n -- \n");
+		i++;
 	}
 	ft_putchar('\n');
 	closedir(dir);
