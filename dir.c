@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 17:33:13 by dchirol           #+#    #+#             */
-/*   Updated: 2017/03/19 18:02:36 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/03/19 20:05:05 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,14 @@ void ft_optl(struct dirent *read, t_options options, char *av)
 	ft_putdate(ctime(&stats.st_mtime));
 }
 
-void	ft_ls(DIR *dir, t_options options, char *av)
+void	ft_ls(t_options options, char *av)
 {
+	DIR 	*dir;
 	struct dirent 	*read;
 	int 			flag;
+	char			*path;
 
+	dir = opendir(av);
 	flag = 0;
 	while ((read = readdir(dir)))
 	{
@@ -92,15 +95,17 @@ void	ft_ls(DIR *dir, t_options options, char *av)
 			|| options.a == 1 || (options.a == 0 && read->d_name[0] != '.'))
 		{
 			if (options.l)
+			{
 				ft_optl(read, options, av);
-			ft_putchar('\t');
+				ft_putchar('\t');
+			}
 			ft_putstr(read->d_name);
+			ft_putchar('\t');
 			if (options.l)
 				ft_putchar('\n');
 			if (options.R && read->d_type == 4 && 
 				   !(read->d_name[0] == '.' && read->d_name[1] == '\0')
-				&& !(read->d_name[0] == '.' && read->d_name[1] == '.' && read->d_name[2] == '\0')
-				&& !(read->d_name[0] == '.' && read->d_name[1] == 'g'))
+				&& !(read->d_name[0] == '.' && read->d_name[1] == '.' && read->d_name[2] == '\0'))
 				flag = 1;
 			//ft_putchar('\t');
 		}	
@@ -113,24 +118,23 @@ void	ft_ls(DIR *dir, t_options options, char *av)
 			dir = opendir(av);
 		while ((read = readdir(dir)))
 		{
-			if (read->d_type == 4 && 
-				   !(read->d_name[0] == '.' && read->d_name[1] == '\0')
-				&& !(read->d_name[0] == '.' && read->d_name[1] == '.' && read->d_name[2] == '\0')
-				&& !(read->d_name[0] == '.' && read->d_name[1] == 'g'))
+			if (read->d_type == 4
+				&& (read->d_name[0] != '.' && read->d_name[0] != '\0')
+				&& !(read->d_name[0] == '.' && read->d_name[1] == '.' && read->d_name[2] == '\0'))
 			{
-				ft_putstr("./");
-				ft_putstr(read->d_name);
+				path = ft_strjoin(ft_strjoin(av, "/"), read->d_name);
+				ft_putstr(path);
 				ft_putchar('\n');
-				ft_ls(opendir(read->d_name), options, av);	
+				ft_ls(options, path);
 			}
 		}
 	}
-	
+	closedir(dir);
 }
 
 int main(int ac, char **av)
 {
-	DIR 	*dir;
+
 	t_options options;
 	int i;
 
@@ -138,17 +142,12 @@ int main(int ac, char **av)
 	i = get_options(av, &options);
 	if (i == ac)
 	{
-		dir = opendir(".");
-		ft_ls(dir, options, ".");
+		ft_ls(options, ".");
 	}
 	while (av[i])
 	{
-		dir = opendir(av[i]);
-		ft_ls(dir, options, av[i]);
-		ft_putstr("\n -- \n");
+		ft_ls(options, av[i]);
 		i++;
 	}
-	ft_putchar('\n');
-	closedir(dir);
 	return (0);
 }
