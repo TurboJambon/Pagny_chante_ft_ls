@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ls.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: David <David@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/03/13 18:01:52 by David            ###   ########.fr       */
+/*   Updated: 2017/03/22 17:23:45 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <grp.h>
 #include <uuid/uuid.h>
 #include <unistd.h>
+#include <stdlib.h>
 #define NB_OPTIONS 5
 #define OPTIONS "Rtrla"
 
@@ -30,6 +31,11 @@ typedef struct s_options {
 	int l;
 	int a;
 } t_options;
+
+typedef struct s_stock {
+	time_t 	time;
+	char 	*name;
+} 				t_stock;
 
 t_options create_struct();
 int		add_option(char c, t_options *options);
