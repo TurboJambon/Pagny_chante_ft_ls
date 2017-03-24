@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
+/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/03/24 18:51:22 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/03/24 20:14:29 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,80 +197,6 @@ void ft_optl(t_dir folder, t_options options, char *av)
 	ft_putdate(ctime(&stats.st_mtime));
 }
 
-/*void	ft_print(t_dir *folder, t_options options, int len, char *av)
-{
-	int i;
-	int flag;
-	char *path;
-
-	flag = 0;
-	i = 0;
-	if (options.l)
-		ft_blocks(av, options.a, folder);
-	if (options.t)
-		folder = ft_optiont(folder, av, options.a, len);
-	if (!options.r)
-	{
-		while (folder[i].type)
-		{
-			if (folder[i].type == 4 && options.R)
-				flag = 1;
-			if (options.l)
-			{
-				ft_optl(folder[i], options, av);
-				ft_putchar('\t');
-				ft_putstr(folder[i].name);
-				ft_putchar('\n');
-			}
-			else
-			{
-				ft_putstr(folder[i].name);
-				ft_putchar('\t');
-			}
-			i++;
-		}
-	}
-	else
-	{
-		i = len - 1;
-		while (i >= 0)
-		{
-			if (folder[i].type == 4 && options.R)
-				flag = 1;
-			if (options.l)
-			{
-				ft_optl(folder[i], options, av);
-				ft_putchar('\t');
-				ft_putstr(folder[i].name);
-				ft_putchar('\n');
-			}
-			else
-			{
-				ft_putstr(folder[i].name);
-				ft_putchar('\t');
-			}
-			i--;
-		}
-	}
-	i = 0;
-	if (flag)
-	{
-		while (folder[i].type)
-		{
-			if (folder[i].type == 4
-				&& (folder[i].name[0] != '.' && folder[i].name[0] != '\0')
-				&& !(folder[i].name[0] == '.' && folder[i].name[1] == '.' && folder[i].name[2] == '\0'))
-			{
-				path = ft_strjoin(ft_strjoin(av, "/"), folder[i].name);
-				ft_putstr(path);
-				ft_putchar('\n');
-				ft_ls(folder, options, len, path);
-			}
-			i++;
-		}
-	}
-}*/
-
 t_dir	*ft_sort_dirname(t_dir *folder, size_t len)
 {
 	t_dir 	tmp;
@@ -296,6 +222,18 @@ t_dir	*ft_sort_dirname(t_dir *folder, size_t len)
 		}
 	}
 	return (folder);
+}
+
+void	freedir(t_dir *tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i].type)
+	{
+		ft_strdel(&tab[i].name);
+		i++;
+	}
 }
 
 void 	ft_ls(t_options options, char *av)
@@ -380,12 +318,18 @@ void 	ft_ls(t_options options, char *av)
 				path = ft_strjoin(ft_strjoin(av, "/"), folder[i].name);
 				ft_putstr(path);
 				ft_putstr(":\n");
+				int k = 0;
+				printf("\n");
 				ft_ls(options, path);
 			}
 			i++;
 		}
 	}
+	freedir(folder);
+	free(folder);
 }
+
+
 
 int main(int ac, char **av)
 {  
@@ -404,5 +348,6 @@ int main(int ac, char **av)
 		ft_ls(options, av[i]);
 		i++;
 	}
+	while (1);
 	return (0);
 }
