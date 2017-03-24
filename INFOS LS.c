@@ -1,3 +1,10 @@
+A CHANGER
+
+-date : 6 mois au lieu de 1 an;
+-affichage correct des liens symboliques;
+
+
+
 
 OPENDIR / READDIR / CLOSEDIR
 #include <dirent.h>

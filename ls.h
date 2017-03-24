@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/03/22 17:23:45 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/03/24 17:18:50 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ typedef struct s_stock {
 	time_t 	time;
 	char 	*name;
 } 				t_stock;
+
+
+typedef struct s_dir
+{
+	unsigned char 	type;
+	char			*name;
+	time_t			time;
+}				t_dir;
 
 t_options create_struct();
 int		add_option(char c, t_options *options);
