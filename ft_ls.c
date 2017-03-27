@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/03/27 23:52:21 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/03/28 00:00:50 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void ft_mode(mode_t n)
 	}
 }
 
-void ft_optl(t_dir folder, t_options options, char *av)
+void ft_optl(t_dir folder, char *av)
 {
 	struct stat stats;
 	char 		*tmp;
@@ -274,7 +274,7 @@ void 	ft_ls(t_options options, char *av)
 				flag = 1;
 			if (options.l)
 			{
-				ft_optl(folder[i], options, av);
+				ft_optl(folder[i], av);
 				ft_putchar('\t');
 				ft_putstr(folder[i].name);
 				ft_putchar('\n');
@@ -299,7 +299,7 @@ void 	ft_ls(t_options options, char *av)
 				flag = 1;
 			if (options.l)
 			{
-				ft_optl(folder[i], options, av);
+				ft_optl(folder[i], av);
 				ft_putchar('\t');
 				ft_putstr(folder[i].name);
 				ft_putchar('\n');
