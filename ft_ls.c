@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/03/24 20:14:29 by niragne          ###   ########.fr       */
+/*   Updated: 2017/03/27 23:52:21 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ t_dir	*ft_folder(t_options options, char *path, int len)
 		}
 	}
 	ret[len].type = 0;
+	closedir(dir);
+	free(read);
 	return (ret);
 }
 
@@ -195,6 +197,7 @@ void ft_optl(t_dir folder, t_options options, char *av)
 	ft_putnbr(stats.st_size);
 	ft_putstr("\t");
 	ft_putdate(ctime(&stats.st_mtime));
+	free(tmp);
 }
 
 t_dir	*ft_sort_dirname(t_dir *folder, size_t len)
@@ -203,13 +206,18 @@ t_dir	*ft_sort_dirname(t_dir *folder, size_t len)
 	int		flag;
 	size_t	i;
 
+	/* OUAIS BAH NIQUE BIEN TA GROSSE RACE OK*/
+	if (!folder->type)
+		return (folder);
+	/*OLALA CHUIS NRV
+	LA LIGNE DE MERDE QUI CHANGE TOUT*/
 
 	flag = 1;
 	while (flag)
 	{
 		flag = 0;
 		i = 0;
-		while (i <= len - 2 && folder[i + 1].type)
+		while (i <= len && folder[i + 1].type)
 		{
 			if (strcmp(folder[i].name, folder[i + 1].name) > 0)
 			{
@@ -248,6 +256,7 @@ void 	ft_ls(t_options options, char *av)
 	i = 0;
 	dir = opendir(av);
 	len = ft_dirlen(dir, options);
+	//closedir(dir);
 	folder = ft_folder(options, av, len);
 	folder = ft_sort_dirname(folder, len);
 //	ft_print(folder, options, len, av);
@@ -318,7 +327,6 @@ void 	ft_ls(t_options options, char *av)
 				path = ft_strjoin(ft_strjoin(av, "/"), folder[i].name);
 				ft_putstr(path);
 				ft_putstr(":\n");
-				int k = 0;
 				printf("\n");
 				ft_ls(options, path);
 			}
@@ -348,6 +356,5 @@ int main(int ac, char **av)
 		ft_ls(options, av[i]);
 		i++;
 	}
-	while (1);
 	return (0);
 }
