@@ -6,9 +6,18 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/03/28 00:00:50 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/03/28 15:59:38 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#define RED   "\x1B[31m"
+#define GRN   "\x1B[32m"
+#define YEL   "\x1B[33m"
+#define BLU   "\x1B[34m"
+#define MAG   "\x1B[35m"
+#define CYN   "\e[1;96m"
+#define WHT   "\x1B[37m"
+#define RESET "\e[0m"
 
 #include "ls.h"
 
@@ -94,7 +103,10 @@ void	ft_blocks(char *path, int a, t_dir *folder)
 			|| a 
 			|| (a == 0 && folder[i].name[0] != '.'))
 		{
-			stat(ft_strjoin(path, ft_strjoin("/", folder[i].name)), &stats);
+			if (folder[i].type == 10)
+				lstat(ft_strjoin(path, ft_strjoin("/", folder[i].name)), &stats);
+			else
+				stat(ft_strjoin(path, ft_strjoin("/", folder[i].name)), &stats);
 			blocks += stats.st_blocks;
 		}
 		i++;
@@ -125,6 +137,7 @@ t_dir	*ft_folder(t_options options, char *path, int len)
 	DIR 			*dir;
 	struct dirent	*read;
 	t_dir			*ret;
+	struct stat 	stats;
 	int				i;
 
 	i = 0;
@@ -135,8 +148,10 @@ t_dir	*ft_folder(t_options options, char *path, int len)
 		if ((read->d_name[0] == '.' && options.a == 1)
 			|| options.a == 1 || (options.a == 0 && read->d_name[0] != '.'))
 		{
+			stat(read->d_name, &stats);
 			ret[i].type = read->d_type;
 			ret[i].name = ft_strdup(read->d_name);
+			ret[i].mode = stats.st_mode;
 			i++;
 		}
 	}
@@ -246,12 +261,12 @@ void	freedir(t_dir *tab)
 
 void 	ft_ls(t_options options, char *av)
 {
-	DIR 	*dir;
-	t_dir 	*folder;
-	int 	i;
-	int len;
-	int flag;
-	char *path;
+	DIR 				*dir;
+	t_dir 				*folder;
+	int 				i;
+	int 				len;
+	int 				flag;
+	char 				*path;
 
 	i = 0;
 	dir = opendir(av);
@@ -276,19 +291,30 @@ void 	ft_ls(t_options options, char *av)
 			{
 				ft_optl(folder[i], av);
 				ft_putchar('\t');
+				if (folder[i].type == 4)
+					ft_putstr(CYN);
+				else if (folder[i].type == 10)
+					ft_putstr(MAG);
+				else if (folder[i].mode == 33261)
+					ft_putstr(RED);
 				ft_putstr(folder[i].name);
 				ft_putchar('\n');
+				ft_putstr(RESET);
 			}
 			else
 			{
+				if (folder[i].type == 4)
+					ft_putstr(CYN);
+				else if (folder[i].type == 10)
+					ft_putstr(MAG);
+				else if (folder[i].mode == 33261)
+					ft_putstr(RED);
 				ft_putstr(folder[i].name);
 				ft_putchar('\t');
+				ft_putstr(RESET);
 			}
 			i++;
 		}
-		ft_putchar('\n');
-		if (options.R)
-			ft_putchar('\n');
 	}
 	else
 	{
@@ -300,37 +326,68 @@ void 	ft_ls(t_options options, char *av)
 			if (options.l)
 			{
 				ft_optl(folder[i], av);
+				if (folder[i].type == 4)
+					ft_putstr(CYN);
+				else if (folder[i].type == 10)
+					ft_putstr(MAG);
+				else if (folder[i].mode == 33261)
+					ft_putstr(RED);
 				ft_putchar('\t');
 				ft_putstr(folder[i].name);
 				ft_putchar('\n');
+				ft_putstr(RESET);
 			}
 			else
 			{
+				if (folder[i].type == 4)
+					ft_putstr(CYN);
+				else if (folder[i].type == 10)
+					ft_putstr(MAG);
+				else if (folder[i].mode == 33261)
+					ft_putstr(RED);
 				ft_putstr(folder[i].name);
 				ft_putchar('\t');
+				ft_putstr(RESET);
 			}
 			i--;
 		}
-		ft_putchar('\n');
-		if (options.R)
-			ft_putchar('\n');
 	}
+	ft_putchar('\n');
 	i = 0;
 	if (flag)
 	{
-		while (folder[i].type)
+		if (!options.r)
 		{
-			if (folder[i].type == 4
-				&& (folder[i].name[0] != '.' && folder[i].name[0] != '\0')
-				&& !(folder[i].name[0] == '.' && folder[i].name[1] == '.' && folder[i].name[2] == '\0'))
+			while (folder[i].type)
 			{
-				path = ft_strjoin(ft_strjoin(av, "/"), folder[i].name);
-				ft_putstr(path);
-				ft_putstr(":\n");
-				printf("\n");
-				ft_ls(options, path);
+				if (folder[i].type == 4
+					&& (folder[i].name[0] != '.' && folder[i].name[0] != '\0')
+					&& !(folder[i].name[0] == '.' && folder[i].name[1] == '.' && folder[i].name[2] == '\0'))
+				{
+					path = ft_strjoin(ft_strjoin(av, "/"), folder[i].name);
+					ft_putstr(path);
+					ft_putstr(":\n");
+					ft_ls(options, path);
+				}
+				i++;
 			}
-			i++;
+		}
+		else if(options.r)
+		{
+			i = len - 1;
+			while (i >= 0)
+			{
+				if (folder[i].type == 4
+					&& (folder[i].name[0] != '.' && folder[i].name[0] != '\0')
+					&& !(folder[i].name[0] == '.' && folder[i].name[1] == '.' && folder[i].name[2] == '\0'))
+				{
+					path = ft_strjoin(ft_strjoin(av, "/"), folder[i].name);
+					ft_putstr(path);
+					ft_putstr(":\n");
+					ft_ls(options, path);
+				}
+			i--;
+			}
 		}
 	}
 	freedir(folder);
@@ -344,13 +401,17 @@ int main(int ac, char **av)
 
 	t_options options;
 	int i;
+	int flag;
 
+	flag = 0;
 	options = create_struct();
 	i = get_options(av, &options);
 	if (i == ac)
 	{
 		ft_ls(options, ".");
 	}
+	if (i < 1)
+		flag = 1;
 	while (av[i])
 	{
 		ft_ls(options, av[i]);

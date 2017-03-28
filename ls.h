@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/03/24 17:18:50 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/03/28 15:00:09 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_dir
 	unsigned char 	type;
 	char			*name;
 	time_t			time;
+	mode_t			mode;
 }				t_dir;
 
 t_options create_struct();
