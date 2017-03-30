@@ -6,7 +6,7 @@
 /*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/03/30 23:50:44 by niragne          ###   ########.fr       */
+/*   Updated: 2017/03/31 01:33:10 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	ft_blocks(char *path, int a, t_dir *folder)
 	struct stat stats;
 	unsigned long blocks;
 	int i;
+	char *var;
 
 	i = 0;
 	blocks = 0;
@@ -147,9 +148,17 @@ void	ft_blocks(char *path, int a, t_dir *folder)
 			|| (a == 0 && folder[i].name[0] != '.'))
 		{
 			if (folder[i].type == 10)
-				lstat(ft_strjoinspe(path, folder[i].name), &stats);
+			{
+				var = ft_strjoinspe(path, folder[i].name);
+				lstat(var, &stats);
+				free(var);
+			}
 			else
-				stat(ft_strjoinspe(path, folder[i].name), &stats);
+			{
+				var = ft_strjoinspe(path, folder[i].name);
+				stat(var, &stats);
+				free(var);
+			}
 			blocks += stats.st_blocks;
 		}
 		i++;
@@ -287,7 +296,7 @@ t_dir	*ft_sort_dirname(t_dir *folder, size_t len)
 }
 
 
-void 	ft_ls(t_options options, char *av)
+void 	ft_ls(t_options options, char *av, int mult)
 {
 	DIR 				*dir;
 	t_dir 				*folder;
@@ -300,8 +309,13 @@ void 	ft_ls(t_options options, char *av)
 	i = 0;
 	if ((dir = opendir(av)))
 	{
+		if (mult)
+		{
+			ft_putstr("\n");
+			ft_putstr(av);
+			ft_putstr(":\n");
+		}
 		len = ft_dirlen(dir, options);
-		//closedir(dir);
 		folder = ft_folder(options, av, len);
 		folder = ft_sort_dirname(folder, len);
 	//	ft_print(folder, options, len, av);
@@ -395,9 +409,12 @@ void 	ft_ls(t_options options, char *av)
 						&& !(folder[i].name[0] == '.' && folder[i].name[1] == '.' && folder[i].name[2] == '\0'))
 					{
 						path = ft_strjoinspe(av, folder[i].name);
+						if (strcmp(path, "./TESTCULLOL") == 0)
+							ft_putendl("slt mdr");
 						ft_putstr(path);
 						ft_putstr(":\n");
-						ft_ls(options, path);
+						ft_ls(options, path, mult);
+						ft_strdel(&path);
 					}
 					i++;
 				}
@@ -414,20 +431,21 @@ void 	ft_ls(t_options options, char *av)
 						path = ft_strjoinspe(av, folder[i].name);
 						ft_putstr(path);
 						ft_putstr(":\n");
-						ft_ls(options, path);
+						ft_ls(options, path, mult);
+						ft_strdel(&path);
 					}
 				i--;
 				}
 			}
 		}
-		free(path);
+	//	ft_strdel(&path);
 		freedir(folder);
 		free(folder);
+		if (mult)
+			ft_putstr("\n");
 	}
 	else
-	{
 		printerr(av, errno);
-	}
 }
 
 
@@ -444,13 +462,13 @@ int main(int ac, char **av)
 	i = get_options(av, &options);
 	if (i == ac)
 	{
-		ft_ls(options, ".");
+		ft_ls(options, ".", 0);
 	}
 	if (i < 1)
 		flag = 1;
 	while (av[i])
 	{
-		ft_ls(options, av[i]);
+		ft_ls(options, av[i], (ac >= i + 2));
 		i++;
 	}
 	while (1);

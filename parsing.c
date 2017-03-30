@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
+/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:21:52 by David             #+#    #+#             */
-/*   Updated: 2017/03/28 00:16:43 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/03/31 00:15:26 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ int     add_option(char c, t_options *options)
         return(options->t = 1);
     return (-1);
 }
+
 int puterr(char *s)
 {
     ft_putendl_fd(s, 2);
     return (-1);
 }
+
 int get_options(char **av, t_options *options)
 {
     int i;
