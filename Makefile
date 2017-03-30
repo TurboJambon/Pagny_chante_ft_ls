@@ -1,6 +1,6 @@
 NAME = ft_ls
 
-SRC = ft_ls.c parsing.c 
+SRC = ft_ls.c parsing.c errors.c
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I includes

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ls.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
+/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/03/28 15:00:09 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/03/30 23:50:32 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #define NB_OPTIONS 5
 #define OPTIONS "Rtrla"
+#include <errno.h>
 
 typedef struct s_options {
 	int R;
@@ -49,3 +50,4 @@ typedef struct s_dir
 t_options create_struct();
 int		add_option(char c, t_options *options);
 int get_options(char **av, t_options *options);
+void	printerr(char *arg, int err);
