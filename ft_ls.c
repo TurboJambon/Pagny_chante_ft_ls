@@ -6,7 +6,7 @@
 /*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/03/31 01:33:10 by niragne          ###   ########.fr       */
+/*   Updated: 2017/03/31 02:19:35 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -471,6 +471,5 @@ int main(int ac, char **av)
 		ft_ls(options, av[i], (ac >= i + 2));
 		i++;
 	}
-	while (1);
 	return (0);
 }
