@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/03/31 02:19:35 by niragne          ###   ########.fr       */
+/*   Updated: 2017/04/03 21:46:48 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,7 +303,9 @@ void 	ft_ls(t_options options, char *av, int mult)
 	int 				i;
 	int 				len;
 	int 				flag;
+	int					ret;
 	char 				*path;
+	char				buf[301];
 
 	path = NULL;
 	i = 0;
@@ -342,8 +344,15 @@ void 	ft_ls(t_options options, char *av, int mult)
 					else if (folder[i].mode == 33261)
 						ft_putstr(RED);
 					ft_putstr(folder[i].name);
-					ft_putchar('\n');
 					ft_putstr(RESET);
+					if (folder[i].type == 10)
+					{
+						ft_putstr(" -> ");
+						ret = readlink(ft_strjoinspe(av, folder[i].name), buf, 300);
+						buf[ret] = '\0';
+						ft_putstr(buf);
+					}
+					ft_putchar('\n');
 				}
 				else
 				{
@@ -370,16 +379,23 @@ void 	ft_ls(t_options options, char *av, int mult)
 				if (options.l)
 				{
 					ft_optl(folder[i], av);
+					ft_putchar('\t');
 					if (folder[i].type == 4)
 						ft_putstr(CYN);
 					else if (folder[i].type == 10)
 						ft_putstr(MAG);
 					else if (folder[i].mode == 33261)
 						ft_putstr(RED);
-					ft_putchar('\t');
 					ft_putstr(folder[i].name);
-					ft_putchar('\n');
 					ft_putstr(RESET);
+					if (folder[i].type == 10)
+					{
+						ft_putstr(" -> ");
+						ret = readlink(ft_strjoinspe(av, folder[i].name), buf, 300);
+						buf[ret] = '\0';
+						ft_putstr(buf);
+					}
+					ft_putchar('\n');
 				}
 				else
 				{

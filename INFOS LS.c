@@ -99,7 +99,7 @@ char *ctime(const time_t *clock);
 READLINK
 #include <unistd.h>
 {
-ssize_t readlink(const char *restrict path, char restrict buf, size_t bufsize);
+ssize_t readlink(const char restrict *path, char restrict *buf, size_t bufsize);
 // Envoie le contenu d'un lien symbolique dans buf. Renvoie le nombre de caracteres du buffer si succes, -1 si erreur.
 }
 
