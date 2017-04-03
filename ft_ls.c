@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/03 21:46:48 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/03 22:22:01 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,17 +222,22 @@ void ft_mode(mode_t n)
 	{
 		if (n & i)
 		{
-			if (i == 0x100 || i == 0x020 || i == 0x004)
+			if (i & 0x124)
 				ft_putchar('r');
-			if (i == 0x080 || i == 0x010 || i == 0x002)
+			else if (i & 0x092)
 				ft_putchar('w');
-			if (i == 0x040 || i == 0x008 || i == 0x001)
+			else if (i & 0x049)
 				ft_putchar('x');
 		}
 		else
 			ft_putchar('-');
 		i >>= 1;
 	}
+}
+
+int	ft_modex(mode_t n)
+{
+	return((n & 0x049) > 0);
 }
 
 void ft_optl(t_dir folder, char *av)
@@ -341,7 +346,7 @@ void 	ft_ls(t_options options, char *av, int mult)
 						ft_putstr(CYN);
 					else if (folder[i].type == 10)
 						ft_putstr(MAG);
-					else if (folder[i].mode == 33261)
+					else if (ft_modex(folder[i].mode))
 						ft_putstr(RED);
 					ft_putstr(folder[i].name);
 					ft_putstr(RESET);
@@ -360,7 +365,7 @@ void 	ft_ls(t_options options, char *av, int mult)
 						ft_putstr(CYN);
 					else if (folder[i].type == 10)
 						ft_putstr(MAG);
-					else if (folder[i].mode == 33261)
+					else if (ft_modex(folder[i].mode))
 						ft_putstr(RED);
 					ft_putstr(folder[i].name);
 					ft_putchar('\t');
