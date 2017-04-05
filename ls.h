@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ls.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/03/30 23:50:32 by niragne          ###   ########.fr       */
+/*   Updated: 2017/04/05 18:51:11 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,18 @@
 #include <uuid/uuid.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <errno.h>
+
 #define NB_OPTIONS 5
 #define OPTIONS "Rtrla"
-#include <errno.h>
+#define RED   "\x1B[31m"
+#define GRN   "\x1B[32m"
+#define YEL   "\x1B[33m"
+#define BLU   "\x1B[34m"
+#define MAG   "\x1B[35m"
+#define CYN   "\x1B[1;96m"
+#define WHT   "\x1B[37m"
+#define RESET "\e[0m"
 
 typedef struct s_options {
 	int R;
@@ -47,7 +56,20 @@ typedef struct s_dir
 	mode_t			mode;
 }				t_dir;
 
-t_options create_struct();
-int		add_option(char c, t_options *options);
-int get_options(char **av, t_options *options);
-void	printerr(char *arg, int err);
+t_options 	create_struct();
+int			add_option(char c, t_options *options);
+int 		get_options(char **av, t_options *options);
+void		printerr(char *arg, int err);
+void		freedir(t_dir *tab);
+char		*ft_strjoinspe(char const *s1, char const *s2);
+int			ft_dirlen(DIR *dir, t_options options);
+t_dir		*ft_folder(t_options options, char *path, int len);
+void		ft_putdate(char const *str);
+t_dir		*ft_tsort(t_dir *folder, int len);
+t_dir		*ft_optiont(t_dir *folder, char *path, int a, int len);
+void		ft_optl(t_dir folder, char *av);
+void		ft_blocks(char *path, int a, t_dir *folder);
+void		ft_mode(mode_t n);
+
+
+
