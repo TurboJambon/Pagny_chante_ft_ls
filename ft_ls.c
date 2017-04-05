@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/03 22:22:01 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/05 18:05:51 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #define YEL   "\x1B[33m"
 #define BLU   "\x1B[34m"
 #define MAG   "\x1B[35m"
-#define CYN   "\e[1;96m"
+#define CYN   "\x1B[1;96m"
 #define WHT   "\x1B[37m"
 #define RESET "\e[0m"
 
@@ -58,12 +58,36 @@ char	*ft_strjoinspe(char const *s1, char const *s2)
 	return (new);
 }
 
+t_dir *ft_tsort(t_dir *folder, int len)
+{
+	int 	flag;
+	int 	i;
+	t_dir	tmp;
+
+	flag = 1;
+	while (flag)
+	{ 
+		flag = 0;
+		i = 0;
+		while (i <= len - 2)
+		{
+			if (folder[i].time < folder[i + 1].time)
+			{
+				tmp = folder[i];
+				folder[i] = folder[i + 1];
+				folder[i + 1] = tmp;
+				flag = 1;
+			}
+			i++;
+		}
+	}
+	return (folder);
+}
+
 t_dir *ft_optiont(t_dir *folder, char *path, int a, int len)
 {
 	struct stat 	stats;
 	int 			i;
-	t_dir 			tmp;
-	int				flag;
 	char			*str;
 
 	i = 0;
@@ -80,25 +104,7 @@ t_dir *ft_optiont(t_dir *folder, char *path, int a, int len)
 		}
 		i++;
 	}
-
-	flag = 1;
-	while (flag)
-	{
-		flag = 0;
-		i = 0;
-		while (i <= len - 2)
-		{
-			if (folder[i].time < folder[i + 1].time)
-			{
-				tmp = folder[i];
-				folder[i] = folder[i + 1];
-				folder[i + 1] = tmp;
-				flag = 1;
-			}
-			i++;
-		}
-	}
-	return (folder);
+	return (ft_tsort(folder, len));
 }
 
 void	ft_putdate(char const *str)
@@ -132,10 +138,10 @@ void	ft_putdate(char const *str)
 
 void	ft_blocks(char *path, int a, t_dir *folder)
 {
-	struct stat stats;
-	unsigned long blocks;
-	int i;
-	char *var;
+	struct 			stat stats;
+	unsigned long 	blocks;
+	int 			i;
+	char 			*var;
 
 	i = 0;
 	blocks = 0;
@@ -143,22 +149,15 @@ void	ft_blocks(char *path, int a, t_dir *folder)
 		return;
 	while (folder[i].type)
 	{
-		if ((folder[i].name[0] == '.' && a)
-			|| a 
+		if ((folder[i].name[0] == '.' && a) || a 
 			|| (a == 0 && folder[i].name[0] != '.'))
 		{
+			var = ft_strjoinspe(path, folder[i].name);
 			if (folder[i].type == 10)
-			{
-				var = ft_strjoinspe(path, folder[i].name);
 				lstat(var, &stats);
-				free(var);
-			}
 			else
-			{
-				var = ft_strjoinspe(path, folder[i].name);
 				stat(var, &stats);
-				free(var);
-			}
+			free(var);
 			blocks += stats.st_blocks;
 		}
 		i++;
@@ -251,13 +250,8 @@ void ft_optl(t_dir folder, char *av)
 		ft_putchar('-');
 	else if (folder.type == 10)
 		ft_putchar('l');
-	else
-		ft_putnbr(folder.type);
 	str = ft_strjoinspe(av, folder.name);
-	if (folder.type == 10)
-		lstat(str, &stats);
-	else
-		stat(str, &stats);
+	folder.type == 10 ? lstat(str, &stats) : stat(str, &stats);
 	ft_mode(stats.st_mode);
 	ft_putstr("\t");
 	ft_putnbr(stats.st_nlink);
@@ -300,6 +294,15 @@ t_dir	*ft_sort_dirname(t_dir *folder, size_t len)
 	return (folder);
 }
 
+void	ft_color(int type, int mode)
+{
+	if (type == 4)
+		ft_putstr(CYN);
+	else if (type == 10)
+		ft_putstr(MAG);
+	else if (ft_modex(mode))
+		ft_putstr(RED);
+}
 
 void 	ft_ls(t_options options, char *av, int mult)
 {
@@ -342,12 +345,7 @@ void 	ft_ls(t_options options, char *av, int mult)
 				{
 					ft_optl(folder[i], av);
 					ft_putchar('\t');
-					if (folder[i].type == 4)
-						ft_putstr(CYN);
-					else if (folder[i].type == 10)
-						ft_putstr(MAG);
-					else if (ft_modex(folder[i].mode))
-						ft_putstr(RED);
+					ft_color(folder[i].type, folder[i].mode);
 					ft_putstr(folder[i].name);
 					ft_putstr(RESET);
 					if (folder[i].type == 10)
@@ -361,12 +359,7 @@ void 	ft_ls(t_options options, char *av, int mult)
 				}
 				else
 				{
-					if (folder[i].type == 4)
-						ft_putstr(CYN);
-					else if (folder[i].type == 10)
-						ft_putstr(MAG);
-					else if (ft_modex(folder[i].mode))
-						ft_putstr(RED);
+					ft_color(folder[i].type, folder[i].mode);
 					ft_putstr(folder[i].name);
 					ft_putchar('\t');
 					ft_putstr(RESET);
@@ -384,13 +377,7 @@ void 	ft_ls(t_options options, char *av, int mult)
 				if (options.l)
 				{
 					ft_optl(folder[i], av);
-					ft_putchar('\t');
-					if (folder[i].type == 4)
-						ft_putstr(CYN);
-					else if (folder[i].type == 10)
-						ft_putstr(MAG);
-					else if (folder[i].mode == 33261)
-						ft_putstr(RED);
+					ft_color(folder[i].type, folder[i].mode);
 					ft_putstr(folder[i].name);
 					ft_putstr(RESET);
 					if (folder[i].type == 10)
@@ -404,12 +391,7 @@ void 	ft_ls(t_options options, char *av, int mult)
 				}
 				else
 				{
-					if (folder[i].type == 4)
-						ft_putstr(CYN);
-					else if (folder[i].type == 10)
-						ft_putstr(MAG);
-					else if (folder[i].mode == 33261)
-						ft_putstr(RED);
+					ft_color(folder[i].type, folder[i].mode);
 					ft_putstr(folder[i].name);
 					ft_putchar('\t');
 					ft_putstr(RESET);
@@ -430,8 +412,6 @@ void 	ft_ls(t_options options, char *av, int mult)
 						&& !(folder[i].name[0] == '.' && folder[i].name[1] == '.' && folder[i].name[2] == '\0'))
 					{
 						path = ft_strjoinspe(av, folder[i].name);
-						if (strcmp(path, "./TESTCULLOL") == 0)
-							ft_putendl("slt mdr");
 						ft_putstr(path);
 						ft_putstr(":\n");
 						ft_ls(options, path, mult);
