@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 18:33:19 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/05 19:57:11 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/06 14:37:36 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_dir 		*ft_optiont(t_dir *folder, char *path, int a, int len)
 	return (ft_tsort(folder, len));
 }
 
-int 		ft_optl(t_dir folder, char *av)
+void		ft_optl(t_dir folder, char *av)
 {
 	struct stat stats;
 	char	*str;
