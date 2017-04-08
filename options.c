@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/05 18:33:19 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/06 14:37:36 by dchirol          ###   ########.fr       */
+/*   Created: 2017/04/08 22:14:28 by dchirol           #+#    #+#             */
+/*   Updated: 2017/04/08 22:23:14 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,42 @@
 
 void		ft_putdate(char const *str)
 {
-	int 	i;
-	char 	*ptr;
+	int		i;
+	char	*ptr;
 	char	*tmp;
 
 	if (!str)
 		return ;
 	i = 4;
 	tmp = ft_itoa(time(NULL) / 31536000 + 1970);
-	if ((ptr = ft_strstr(str , tmp)))
+	if ((ptr = ft_strstr(str, tmp)))
 		write(1, str + 3, ptr - str - 7);
-	else 
+	else
 	{
 		ft_putchar(' ');
 		while (str[i] != '\n')
 		{
 			if (i >= 10 && 18 >= i)
 				i++;
-			else 
-				{
-					ft_putchar(str[i]);
-					i++;
-				}
+			else
+			{
+				ft_putchar(str[i]);
+				i++;
+			}
 		}
 	}
 	free(tmp);
 }
 
-t_dir 		*ft_tsort(t_dir *folder, int len)
+t_dir		*ft_tsort(t_dir *folder, int len)
 {
-	int 	flag;
-	int 	i;
+	int		flag;
+	int		i;
 	t_dir	tmp;
 
 	flag = 1;
 	while (flag)
-	{ 
+	{
 		flag = 0;
 		i = 0;
 		while (i <= len - 2)
@@ -67,17 +67,17 @@ t_dir 		*ft_tsort(t_dir *folder, int len)
 	return (folder);
 }
 
-t_dir 		*ft_optiont(t_dir *folder, char *path, int a, int len)
+t_dir		*ft_optiont(t_dir *folder, char *path, int a, int len)
 {
-	struct stat 	stats;
-	int 			i;
+	struct stat		stats;
+	int				i;
 	char			*str;
 
 	i = 0;
 	while (folder[i].type)
 	{
 		if ((folder[i].name[0] == '.' && a)
-			|| a 
+			|| a
 			|| (a == 0 && folder[i].name[0] != '.'))
 		{
 			str = ft_strjoinspe(path, folder[i].name);
@@ -92,8 +92,8 @@ t_dir 		*ft_optiont(t_dir *folder, char *path, int a, int len)
 
 void		ft_optl(t_dir folder, char *av)
 {
-	struct stat stats;
-	char	*str;
+	struct stat	stats;
+	char		*str;
 
 	if (folder.type == 4)
 		ft_putchar('d');
@@ -119,18 +119,18 @@ void		ft_optl(t_dir folder, char *av)
 
 void		ft_blocks(char *path, int a, t_dir *folder)
 {
-	struct 			stat stats;
-	unsigned long 	blocks;
-	int 			i;
-	char 			*var;
+	struct stat		stats;
+	unsigned long	blocks;
+	int				i;
+	char			*var;
 
 	i = 0;
 	blocks = 0;
 	if (!folder[i].type)
-		return;
+		return ;
 	while (folder[i].type)
 	{
-		if ((folder[i].name[0] == '.' && a) || a 
+		if ((folder[i].name[0] == '.' && a) || a
 			|| (a == 0 && folder[i].name[0] != '.'))
 		{
 			var = ft_strjoinspe(path, folder[i].name);

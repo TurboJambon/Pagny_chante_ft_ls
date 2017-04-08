@@ -6,15 +6,15 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 18:50:37 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/05 20:08:23 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/08 22:15:23 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-void 		ft_mode(mode_t n)
+void	ft_mode(mode_t n)
 {
-	mode_t 	i;
+	mode_t	i;
 
 	i = 0x100;
 	while (i > 0)

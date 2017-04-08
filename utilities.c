@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 18:37:16 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/05 19:57:10 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/08 22:16:42 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,15 @@ char		*ft_strjoinspe(char const *s1, char const *s2)
 
 int			ft_dirlen(DIR *dir, t_options options)
 {
-	struct dirent *read;
-	int i;
+	struct dirent	*read;
+	int				i;
 
 	i = 0;
 	while ((read = readdir(dir)))
 	{
 		if ((read->d_name[0] == '.' && options.a == 1)
 			|| options.a == 1 || (options.a == 0 && read->d_name[0] != '.'))
-		i++; 
+			i++;
 	}
 	closedir(dir);
 	return (i);
@@ -67,10 +67,10 @@ int			ft_dirlen(DIR *dir, t_options options)
 
 t_dir		*ft_folder(t_options options, char *path, int len)
 {
-	DIR 			*dir;
+	DIR				*dir;
 	struct dirent	*read;
 	t_dir			*ret;
-	struct stat 	stats;
+	struct stat		stats;
 	int				i;
 
 	i = 0;

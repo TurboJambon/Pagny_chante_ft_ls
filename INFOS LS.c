@@ -1,9 +1,9 @@
 A CHANGER
 
--date : 6 mois au lieu de 1 an;
--affichage correct des liens symboliques;
-
-
+- date : 6 mois au lieu de 1 an;
+- ls sur les fichiers
+- couleur rouge partout wtf
+- 
 
 
 OPENDIR / READDIR / CLOSEDIR
