@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/04/08 22:21:49 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/08 23:05:33 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@
 #define RESET "\e[0m"
 
 typedef struct s_options {
-	int R;
-	int t;
-	int r;
-	int l;
-	int a;
+	int 	R;
+	int 	t;
+	int 	r;
+	int 	l;
+	int 	a;
+	int 	mult;
+	size_t	len;
 } t_options;
 
 typedef struct s_stock {
