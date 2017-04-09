@@ -6,11 +6,60 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/08 23:16:03 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/09 19:01:58 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
+
+
+char	*ft_strrnchr(const char *s, int c, int n)
+{
+	int		len;
+
+	len = n;
+	while (len && s[len] != (char)c)
+		len--;
+	if (s[len] == (char)c)
+		return ((char *)&s[len]);
+	return (NULL);
+}
+
+char	*ft_strndup(char const *s1, int n)
+{
+	char		*new;
+	size_t		i;
+
+	i = 0;
+	if ((new = ft_strnew(ft_strlen(s1))))
+	{
+		while (i < (size_t)n)
+		{
+			new[i] = s1[i];
+			i++;
+		}
+	}
+	return (new);
+}
+
+char		*getpath(char *path)
+{
+	int len;
+	char *ptr;
+	char *ret;
+
+	if (!path)
+		return (ft_strdup("."));
+	len = ft_strlen(path) - 1;
+	while(path[len] == '/')
+		len--;
+	if (!(ptr = ft_strrnchr(path, '/', len + 1)))
+		return (".");
+	len = ptr - path;
+	ret = ft_strndup(path, len);
+	return(ret);
+}
+
 
 t_dir		*ft_sort_dirname(t_dir *folder, size_t len)
 {
@@ -40,56 +89,7 @@ t_dir		*ft_sort_dirname(t_dir *folder, size_t len)
 	return (folder);
 }
 
-void		ft_color(int type, mode_t mode)
-{
-	if (type == 4)
-		ft_putstr(CYN);
-	else if (type == 10)
-		ft_putstr(MAG);
-	else if (mode & 0x049)
-		ft_putstr(RED);
-}
 
-int		ft_affls(t_dir *folder, t_options options, char *av)
-{
-	int 	i;
-	int		flag;
-	int 	ret;
-	char 	buf[256];
-
-	flag = 0;
-	(options.r) ? (i = options.len - 1) : (i = 0);
-	while (folder[i].type && i >= 0)
-	{
-		if (folder[i].type == 4 && options.R)
-			flag = 1;
-		if (options.l)
-		{
-			ft_optl(folder[i], av);
-			ft_putchar('\t');
-			ft_color(folder[i].type, folder[i].mode);
-			ft_putstr(folder[i].name);
-			ft_putstr(RESET);
-			if (folder[i].type == 10)
-			{
-				ft_putstr(" -> ");
-				ret = readlink(ft_strjoinspe(av, folder[i].name), buf, 300);
-				buf[ret] = '\0';
-				ft_putstr(buf);
-			}
-			ft_putchar('\n');
-		}
-		else
-		{
-			ft_color(folder[i].type, folder[i].mode);
-			ft_putstr(folder[i].name);
-			ft_putchar('\t');
-			ft_putstr(RESET);
-		}
-		(options.r) ? i-- : i++;
-	}
-	return (flag);
-}
 
 void 		ft_ls(t_options options, char *av)
 {
@@ -99,18 +99,61 @@ void 		ft_ls(t_options options, char *av)
 	int 				flag;
 	char 				*path;
 
+	struct dirent		*read;
+	struct stat			stats;
+	char				*str;
+
 	path = NULL;
 	if (!(dir = opendir(av)))
 	{
-		printerr(av, errno);
+		if (options.l)
+			{
+				dir = opendir(getpath(av));
+				while ((read = readdir(dir)))
+				{
+					if (ft_strcmp(read->d_name, av) == 0)
+					{
+						if (read->d_type == 4)
+							ft_putchar('d');
+						else if (read->d_type == 8)
+							ft_putchar('-');
+						else if (read->d_type == 10)
+							ft_putchar('l');
+						str = ft_strjoinspe(getpath(av), read->d_name);
+						read->d_type == 10 ? lstat(str, &stats) : stat(str, &stats);
+						ft_mode(stats.st_mode);
+						ft_putstr("\t");
+						ft_putnbr(stats.st_nlink);
+						ft_putstr("\t");
+						ft_putstr(getpwuid(stats.st_uid)->pw_name);
+						ft_putstr("  ");
+						ft_putstr(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
+						ft_putstr("\t");
+						ft_putnbr(stats.st_size);
+						ft_putstr("\t");
+						ft_putdate(ctime(&stats.st_mtime));
+						ft_putchar('\t');
+						ft_color(read->d_type, stats.st_mode);
+						ft_putstr(read->d_name);
+						ft_putstr(RESET);
+						ft_putchar('\n');
+						free(str);
+					}
+				}
+			}
+		else
+		{
+			ft_putstr(av);
+			ft_putstr("\t");
+		}
 		return ;
 	}
 	if (options.mult)
-		{
-			ft_putstr("\n");
-			ft_putstr(av);
-			ft_putstr(":\n");
-		}
+	{
+		ft_putstr("\n");
+		ft_putstr(av);
+		ft_putstr(":\n");
+	}
 	options.len = ft_dirlen(dir, options);
 	folder = ft_folder(options, av, options.len);
 	folder = ft_sort_dirname(folder, options.len);
@@ -126,12 +169,12 @@ void 		ft_ls(t_options options, char *av)
 	ft_putchar('\n');
 	i = 0;
 	if (flag)
-	{ // options.len - folder - options - path - av
+	{ 
 		(options.r) ? (i = options.len - 1) : (i = 0); 
 		while (folder[i].type && i >= 0)
 		{
 			if (folder[i].type == 4
-				&& (folder[i].name[0] != '.' && folder[i].name[0] != '\0')
+				&& (folder[i].name[0] != '.' && folder[i].name[1] != '\0')
 				&& !(folder[i].name[0] == '.' 
 				&& folder[i].name[1] == '.' && folder[i].name[2] == '\0'))
 			{
@@ -150,11 +193,60 @@ void 		ft_ls(t_options options, char *av)
 		ft_putstr("\n");	
 }
 
+size_t		ft_tablen(char **tab)
+{
+	int		i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+char		**ft_sort_av(char **av, t_options options)
+{
+	char	**tab;
+	char	*tmp;
+	int		flag;
+	size_t	i;
+	int		j;
+
+	i = 1;
+	if (options.a || options.r || options.l || options.R || options.t)
+		i = 2;
+	tab = malloc(sizeof(char*) * ft_tablen(av) + 1);
+	j = 0;
+	while (av[i])
+	{
+		tab[j] = ft_strdup(av[i]);
+		i++;
+		j++;
+	}
+	flag = 1;
+	while (flag)
+	{
+		flag = 0;
+		i = 0;
+		while (i < ft_tablen(tab) - 1)
+		{
+			if (ft_strcmp(tab[i], tab[i + 1]) > 0)
+			{
+				tmp = tab[i];
+				tab[i] = tab[i + 1];
+				tab[i + 1] = tmp;
+				flag = 1;
+			}
+			i++;
+		}
+	}
+	return (tab);
+}
+
 int 		main(int ac, char **av)
 {  
-
-	t_options options;
-	int i;
+	t_options 		options;
+	int 			i;
+	char			**arg;
 
 	options = create_struct();
 	i = get_options(av, &options);
@@ -163,9 +255,11 @@ int 		main(int ac, char **av)
 		ft_ls(options, ".");
 	}
 	(ac >= i + 2) ? (options.mult) = 1 : (options.mult = 0);
-	while (av[i])
+	arg = ft_sort_av(av, options);
+	i = 0;
+	while (arg[i])
 	{
-		ft_ls(options, av[i]);
+		ft_ls(options, arg[i]);
 		i++;
 	}
 	return (0);

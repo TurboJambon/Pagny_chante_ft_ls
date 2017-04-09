@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 18:37:16 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/08 22:16:42 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/09 15:02:46 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ t_dir		*ft_folder(t_options options, char *path, int len)
 	struct dirent	*read;
 	t_dir			*ret;
 	struct stat		stats;
-	int				i;
+	char			*megapath;
 
-	i = 0;
+	options.i = 0;
 	dir = opendir(path);
 	ret = malloc(sizeof(t_dir) * len + 1);
 	while ((read = readdir(dir)))
@@ -81,11 +81,13 @@ t_dir		*ft_folder(t_options options, char *path, int len)
 		if ((read->d_name[0] == '.' && options.a == 1)
 			|| options.a == 1 || (options.a == 0 && read->d_name[0] != '.'))
 		{
-			stat(read->d_name, &stats);
-			ret[i].type = read->d_type;
-			ret[i].name = ft_strdup(read->d_name);
-			ret[i].mode = stats.st_mode;
-			i++;
+			ret[options.i].type = read->d_type;
+			megapath = ft_strjoinspe(path, read->d_name);
+			(read->d_type == 10) ? lstat(megapath, &stats) : stat(megapath, &stats);
+			ret[options.i].name = ft_strdup(read->d_name);
+			ret[options.i].mode = stats.st_mode;
+			free(megapath);
+			options.i++;
 		}
 	}
 	ret[len].type = 0;

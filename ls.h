@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/04/08 23:05:33 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/09 18:17:11 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 #define MAG   "\x1B[35m"
 #define CYN   "\x1B[1;96m"
 #define WHT   "\x1B[37m"
-#define RESET "\e[0m"
+#define RESET "\x1B[0m"
 
 typedef struct s_options {
 	int 	R;
@@ -40,6 +40,7 @@ typedef struct s_options {
 	int 	r;
 	int 	l;
 	int 	a;
+	int		i;
 	int 	mult;
 	size_t	len;
 } t_options;
@@ -72,6 +73,7 @@ t_dir		*ft_optiont(t_dir *folder, char *path, int a, int len);
 void		ft_optl(t_dir folder, char *av);
 void		ft_blocks(char *path, int a, t_dir *folder);
 void		ft_mode(mode_t n);
-
+int			ft_affls(t_dir *folder, t_options options, char *av);
+void		ft_color(int type, mode_t mode);
 
 
