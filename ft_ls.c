@@ -6,7 +6,7 @@
 /*   By: David <David@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/10 18:31:20 by David            ###   ########.fr       */
+/*   Updated: 2017/04/10 20:26:04 by David            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void 		ft_ls(t_options options, char *av)
 	path = NULL;
 	if (!(dir = opendir(av)))
 	{
+		printerr(av, errno);
 		if (options.l)
 			{
 				dir = opendir(getpath(av));
@@ -141,11 +142,6 @@ void 		ft_ls(t_options options, char *av)
 					}
 				}
 			}
-		else
-		{
-			ft_putstr(av);
-			ft_putstr("\n");
-		}
 		return ;
 	}
 	if (options.mult)
@@ -273,6 +269,11 @@ int 		main(int ac, char **av)
 
 	options = create_struct();
 	i = get_options(av, &options);
+	if (i == -1)
+	{
+		ft_putendl("usage: ls [-Ralrt] [file ...]");
+		return (0);
+	}
 	if (i == ac)
 	{
 		ft_ls(options, ".");
@@ -297,7 +298,6 @@ int 		main(int ac, char **av)
 		while (arg[i])
 		{
 			ft_ls(options, arg[i]);
-			//printf("%s\n", arg[i]);
 			i++;
 		}
 	}
