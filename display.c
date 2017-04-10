@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
+/*   By: David <David@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/09 15:02:45 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/10 20:54:52 by David            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		ft_putdate(char const *str)
 	if (!str)
 		return ;
 	i = 4;
-	tmp = ft_itoa(time(NULL) / 31536000 + 1970);
+	tmp = ft_itoa((time(NULL)) / 31536000 + 1970);
 	if ((ptr = ft_strstr(str, tmp)))
 		write(1, str + 3, ptr - str - 7);
 	else
