@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
+/*   By: David <David@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/09 19:01:58 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/10 18:31:20 by David            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void 		ft_ls(t_options options, char *av)
 		else
 		{
 			ft_putstr(av);
-			ft_putstr("\t");
+			ft_putstr("\n");
 		}
 		return ;
 	}
@@ -203,17 +203,13 @@ size_t		ft_tablen(char **tab)
 	return (i);
 }
 
-char		**ft_sort_av(char **av, t_options options)
+char		**ft_sort_av(char **av, int i)
 {
 	char	**tab;
 	char	*tmp;
 	int		flag;
-	size_t	i;
 	int		j;
 
-	i = 1;
-	if (options.a || options.r || options.l || options.R || options.t)
-		i = 2;
 	tab = malloc(sizeof(char*) * ft_tablen(av) + 1);
 	j = 0;
 	while (av[i])
@@ -227,6 +223,33 @@ char		**ft_sort_av(char **av, t_options options)
 	{
 		flag = 0;
 		i = 0;
+		while ((size_t)i < ft_tablen(tab) - 1)
+		{
+			if (ft_strcmp(tab[i], tab[i + 1]) > 0)
+			{
+				tmp = tab[i];
+				tab[i] = tab[i + 1];
+				tab[i + 1] = tmp;
+				flag = 1;
+			}
+			i++;
+		}
+	}
+	tab[i + 1] = NULL;
+	return (tab);
+}
+
+char	**ft_sort_spe(char **tab, int j)
+{
+	char	*tmp;
+	int		flag;
+	size_t	i;
+
+	flag = 1;
+	while (flag)
+	{
+		flag = 0;
+		i = j + 1;
 		while (i < ft_tablen(tab) - 1)
 		{
 			if (ft_strcmp(tab[i], tab[i + 1]) > 0)
@@ -253,14 +276,31 @@ int 		main(int ac, char **av)
 	if (i == ac)
 	{
 		ft_ls(options, ".");
+		return (0);
+	}
+	else
+	{
+		arg = ft_sort_spe(av, i);
 	}
 	(ac >= i + 2) ? (options.mult) = 1 : (options.mult = 0);
-	arg = ft_sort_av(av, options);
-	i = 0;
-	while (arg[i])
+	if (options.r)
 	{
-		ft_ls(options, arg[i]);
-		i++;
+		ac--;
+		while (ac >= i)
+		{
+			ft_ls(options, arg[ac]);
+			ac--;
+		}
 	}
+	else
+	{
+		while (arg[i])
+		{
+			ft_ls(options, arg[i]);
+			//printf("%s\n", arg[i]);
+			i++;
+		}
+	}
+	while (1);
 	return (0);
 }

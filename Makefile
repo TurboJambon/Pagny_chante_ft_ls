@@ -9,7 +9,7 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	gcc -o $@ $^ libft.a
+	@gcc -o $@ $^ libft.a
 
 clean:
 	/bin/rm -f $(OBJ)
