@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/11 15:05:24 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/11 15:09:51 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ void 		ft_ls(t_options options, char *av)
 
 	path = NULL;
 	if (!(dir = opendir(av)))
-	{
-		printerr(av, errno);
+	{	
+		printerr(av, errno, options.l);
 		if (options.l)
 			{
 				dir = opendir(getpath(av));
@@ -292,6 +292,7 @@ int 		main(int ac, char **av)
 			ft_ls(options, arg[ac]);
 			ac--;
 		}
+		ft_putchar('\n');
 	}
 	else
 	{
@@ -300,6 +301,7 @@ int 		main(int ac, char **av)
 			ft_ls(options, arg[i]);
 			i++;
 		}
+		ft_putchar('\n');
 	}
 	return (0);
 }

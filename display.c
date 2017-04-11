@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: David <David@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/10 20:54:52 by David            ###   ########.fr       */
+/*   Updated: 2017/04/11 15:34:54 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,33 +22,44 @@ void		ft_color(int type, mode_t mode)
 		ft_putstr(RED);
 }
 
-void		ft_putdate(char const *str)
+void		putyear(time_t date)
 {
-	int		i;
-	char	*ptr;
-	char	*tmp;
+	char *str;
+	int i;
 
-	if (!str)
-		return ;
-	i = 4;
-	tmp = ft_itoa((time(NULL)) / 31536000 + 1970);
-	if ((ptr = ft_strstr(str, tmp)))
-		write(1, str + 3, ptr - str - 7);
-	else
-	{
-		ft_putchar(' ');
-		while (str[i] != '\n')
+	i = 3;
+	str = ctime(&date);
+	while (i <= 9)
 		{
-			if (i >= 10 && 18 >= i)
-				i++;
-			else
-			{
 				ft_putchar(str[i]);
 				i++;
-			}
 		}
-	}
-	free(tmp);
+		ft_putchar(' ');
+	write(1, str + 20, 4);
+}
+
+void		putdatejambon(time_t date)
+{
+	int i;
+	char *str;
+
+	str = ctime(&date);
+	i = 4;
+		ft_putchar(' ');
+		while (i <= 15)
+		{
+				ft_putchar(str[i]);
+				i++;
+		}
+
+}
+
+void		ft_putdate(time_t date)
+{
+	if (time(NULL) - date > 15768000)
+		putyear(date);
+	else
+		putdatejambon(date);
 }
 
 void	ft_displayname(t_dir folder)

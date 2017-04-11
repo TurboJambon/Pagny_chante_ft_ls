@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: David <David@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:14:28 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/10 20:54:44 by David            ###   ########.fr       */
+/*   Updated: 2017/04/11 15:22:22 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void		ft_optl(t_dir folder, char *av)
 	ft_putstr("\t");
 	ft_putnbr(stats.st_size);
 	ft_putstr("\t");
-	ft_putdate(ctime(&stats.st_mtime));
+	ft_putdate(stats.st_mtime);
 	free(str);
 }
 

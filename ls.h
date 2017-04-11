@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/04/09 18:17:11 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/11 15:22:51 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ typedef struct s_dir
 t_options 	create_struct();
 int			add_option(char c, t_options *options);
 int 		get_options(char **av, t_options *options);
-void		printerr(char *arg, int err);
+void		printerr(char *arg, int err, int flaf);
 void		freedir(t_dir *tab);
 char		*ft_strjoinspe(char const *s1, char const *s2);
 int			ft_dirlen(DIR *dir, t_options options);
 t_dir		*ft_folder(t_options options, char *path, int len);
-void		ft_putdate(char const *str);
+void		ft_putdate(time_t date);
 t_dir		*ft_tsort(t_dir *folder, int len);
 t_dir		*ft_optiont(t_dir *folder, char *path, int a, int len);
 void		ft_optl(t_dir folder, char *av);
