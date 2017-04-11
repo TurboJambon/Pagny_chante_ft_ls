@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: David <David@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/10 20:50:05 by David            ###   ########.fr       */
+/*   Updated: 2017/04/11 15:05:24 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ void 		ft_ls(t_options options, char *av)
 						ft_putnbr(stats.st_size);
 						ft_putstr("\t");
 						ft_putdate(ctime(&stats.st_mtime));
-						printf("CUL CUL CUL %s ", ctime(&stats.st_mtime));
 						ft_putchar('\t');
 						ft_color(read->d_type, stats.st_mode);
 						ft_putstr(read->d_name);
@@ -302,6 +301,5 @@ int 		main(int ac, char **av)
 			i++;
 		}
 	}
-	while (1);
 	return (0);
 }
