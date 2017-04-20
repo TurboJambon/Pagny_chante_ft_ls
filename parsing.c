@@ -51,16 +51,16 @@ int			get_options(char **av, t_options *options)
 	int	j;
 	int	flag;
 
-	i = 1;
+	i = 0;
 	flag = 0;
-	while (av[i])
+	while (av[++i])
 	{
-		j = 1;
+		j = 0;
 		if (av[i][0] != '-')
 			break ;
 		else
 		{
-			while (av[i][j])
+			while (av[i][++j])
 			{
 				if (add_option(av[i][j], options) == -1)
 				{
@@ -68,10 +68,8 @@ int			get_options(char **av, t_options *options)
 					write(1, &av[i][j], 1);
 					return (puterr(""));
 				}
-				j++;
 			}
 		}
-		i++;
 	}
 	return (i);
 }

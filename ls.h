@@ -66,7 +66,7 @@ void		printerr(char *arg, int err, int flaf);
 void		freedir(t_dir *tab);
 char		*ft_strjoinspe(char const *s1, char const *s2);
 int			ft_dirlen(DIR *dir, t_options options);
-t_dir		*ft_folder(t_options options, char *path, int len);
+t_dir		*ft_folder(t_options options, char *path, int len, int i);
 void		ft_putdate(time_t date);
 t_dir		*ft_tsort(t_dir *folder, int len);
 t_dir		*ft_optiont(t_dir *folder, char *path, int a, int len);
@@ -75,5 +75,5 @@ void		ft_blocks(char *path, int a, t_dir *folder);
 void		ft_mode(mode_t n);
 int			ft_affls(t_dir *folder, t_options options, char *av);
 void		ft_color(int type, mode_t mode);
-
+void 		ft_ls(t_options options, char *av);
 

@@ -65,15 +65,14 @@ int			ft_dirlen(DIR *dir, t_options options)
 	return (i);
 }
 
-t_dir		*ft_folder(t_options options, char *path, int len)
+t_dir		*ft_folder(t_options options, char *path, int len, int i)
 {
 	DIR				*dir;
 	struct dirent	*read;
 	t_dir			*ret;
 	struct stat		stats;
-	char			*megapath;
+	char			*mpath;
 
-	options.i = 0;
 	dir = opendir(path);
 	ret = malloc(sizeof(t_dir) * len + 1);
 	while ((read = readdir(dir)))
@@ -81,17 +80,16 @@ t_dir		*ft_folder(t_options options, char *path, int len)
 		if ((read->d_name[0] == '.' && options.a == 1)
 			|| options.a == 1 || (options.a == 0 && read->d_name[0] != '.'))
 		{
-			ret[options.i].type = read->d_type;
-			megapath = ft_strjoinspe(path, read->d_name);
-			(read->d_type == 10) ? lstat(megapath, &stats) : stat(megapath, &stats);
-			ret[options.i].name = ft_strdup(read->d_name);
-			ret[options.i].mode = stats.st_mode;
-			free(megapath);
-			options.i++;
+			ret[++i].type = read->d_type;
+			mpath = ft_strjoinspe(path, read->d_name);
+			(read->d_type == 10) ? lstat(mpath, &stats) : stat(mpath, &stats);
+			ret[i].name = ft_strdup(read->d_name);
+			ret[i].mode = stats.st_mode;
+			free(mpath);
 		}
 	}
 	ret[len].type = 0;
-	closedir(dir);
 	free(read);
+	closedir(dir);
 	return (ret);
 }

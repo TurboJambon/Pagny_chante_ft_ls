@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/11 15:34:54 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/11 15:35:41 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,33 @@ void		ft_color(int type, mode_t mode)
 
 void		putyear(time_t date)
 {
-	char *str;
-	int i;
+	char		*str;
+	int			i;
 
 	i = 3;
 	str = ctime(&date);
 	while (i <= 9)
-		{
-				ft_putchar(str[i]);
-				i++;
-		}
-		ft_putchar(' ');
+	{
+		ft_putchar(str[i]);
+		i++;
+	}
+	ft_putchar(' ');
 	write(1, str + 20, 4);
 }
 
 void		putdatejambon(time_t date)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
 	str = ctime(&date);
 	i = 4;
-		ft_putchar(' ');
-		while (i <= 15)
-		{
-				ft_putchar(str[i]);
-				i++;
-		}
-
+	ft_putchar(' ');
+	while (i <= 15)
+	{
+		ft_putchar(str[i]);
+		i++;
+	}
 }
 
 void		ft_putdate(time_t date)
@@ -64,9 +63,9 @@ void		ft_putdate(time_t date)
 
 void	ft_displayname(t_dir folder)
 {
-		ft_color(folder.type, folder.mode);
-		ft_putstr(folder.name);
-		ft_putstr(RESET);
+	ft_color(folder.type, folder.mode);
+	ft_putstr(folder.name);
+	ft_putstr(RESET);
 }
 
 void	ft_displayinfos(t_options options, t_dir folder, char *av)
@@ -76,9 +75,8 @@ void	ft_displayinfos(t_options options, t_dir folder, char *av)
 	char	*path;
 
 	if (options.l)
-		{
+	{
 		ft_optl(folder, av);
-		ft_putchar('\t');
 		ft_displayname(folder);
 		if (folder.type == 10)
 		{
@@ -101,11 +99,13 @@ void	ft_displayinfos(t_options options, t_dir folder, char *av)
 
 int		ft_affls(t_dir *folder, t_options options, char *av)
 {
-	int 	i;
+	int		i;
 	int		flag;
 
 	flag = 0;
-	(options.r) ? (i = options.len - 1) : (i = 0);
+	i = 0;
+	if (options.r)
+		i = options.len - 1;
 	while (folder[i].type && i >= 0)
 	{
 		if (folder[i].type == 4 && options.R)
