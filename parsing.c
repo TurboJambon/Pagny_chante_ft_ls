@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
+/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:00:14 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/11 15:14:26 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/21 17:35:51 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			add_option(char c, t_options *options)
 
 int			puterr(char *s)
 {
-	ft_putendl_fd(s, 2);
+	ft_putendl_buf_fd(s, 2);
 	return (-1);
 }
 
@@ -64,7 +64,7 @@ int			get_options(char **av, t_options *options)
 			{
 				if (add_option(av[i][j], options) == -1)
 				{
-					ft_putstr("ls: illegal option -- ");
+					ft_putstr_buf("ls: illegal option -- ");
 					write(1, &av[i][j], 1);
 					return (puterr(""));
 				}

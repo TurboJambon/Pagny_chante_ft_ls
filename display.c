@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
+/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/11 15:35:41 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/21 18:05:22 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void		ft_color(int type, mode_t mode)
 {
 	if (type == 4)
-		ft_putstr(CYN);
+		ft_putstr_buf(CYN);
 	else if (type == 10)
-		ft_putstr(MAG);
+		ft_putstr_buf(MAG);
 	else if (mode & 0x049)
-		ft_putstr(RED);
+		ft_putstr_buf(RED);
 }
 
 void		putyear(time_t date)
@@ -31,11 +31,11 @@ void		putyear(time_t date)
 	str = ctime(&date);
 	while (i <= 9)
 	{
-		ft_putchar(str[i]);
+		ft_putchar_buf(str[i]);
 		i++;
 	}
-	ft_putchar(' ');
-	write(1, str + 20, 4);
+	ft_putchar_buf(' ');
+	ft_buf(1, str + 20, 4);
 }
 
 void		putdatejambon(time_t date)
@@ -45,10 +45,10 @@ void		putdatejambon(time_t date)
 
 	str = ctime(&date);
 	i = 4;
-	ft_putchar(' ');
+	ft_putchar_buf(' ');
 	while (i <= 15)
 	{
-		ft_putchar(str[i]);
+		ft_putchar_buf(str[i]);
 		i++;
 	}
 }
@@ -64,8 +64,8 @@ void		ft_putdate(time_t date)
 void	ft_displayname(t_dir folder)
 {
 	ft_color(folder.type, folder.mode);
-	ft_putstr(folder.name);
-	ft_putstr(RESET);
+	ft_putstr_buf(folder.name);
+	ft_putstr_buf(RESET);
 }
 
 void	ft_displayinfos(t_options options, t_dir folder, char *av)
@@ -80,21 +80,21 @@ void	ft_displayinfos(t_options options, t_dir folder, char *av)
 		ft_displayname(folder);
 		if (folder.type == 10)
 		{
-			ft_putstr(" -> ");
+			ft_putstr_buf(" -> ");
 			path = ft_strjoinspe(av, folder.name);
 			ret = readlink(path, buf, 256);
 			buf[ret] = '\0';
-			ft_putstr(buf);
+			ft_putstr_buf(buf);
 			free(path);
 		}
-		ft_putchar('\n');
+		ft_putchar_buf('\n');
 	}
 	else
 	{
 		ft_displayname(folder);
-		ft_putchar('\t');
+		ft_putchar_buf('\t');
 	}
-	ft_putstr(RESET);
+	ft_putstr_buf(RESET);
 }
 
 int		ft_affls(t_dir *folder, t_options options, char *av)
@@ -113,5 +113,6 @@ int		ft_affls(t_dir *folder, t_options options, char *av)
 		ft_displayinfos(options, folder[i], av);
 		(options.r) ? i-- : i++;
 	}
+	ft_putchar_buf('\n');
 	return (flag);
 }

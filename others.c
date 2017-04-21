@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   others.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
+/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 18:50:37 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/09 15:02:48 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/21 17:32:17 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void	ft_mode(mode_t n)
 		if (n & i)
 		{
 			if (i & 0x124)
-				ft_putchar('r');
+				ft_putchar_buf('r');
 			else if (i & 0x092)
-				ft_putchar('w');
+				ft_putchar_buf('w');
 			else if (i & 0x049)
-				ft_putchar('x');
+				ft_putchar_buf('x');
 		}
 		else
-			ft_putchar('-');
+			ft_putchar_buf('-');
 		i >>= 1;
 	}
 }

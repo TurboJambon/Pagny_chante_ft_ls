@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
+/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:14:28 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/11 17:28:00 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/21 17:31:58 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,25 +67,25 @@ void		ft_optl(t_dir folder, char *av)
 	char		*str;
 
 	if (folder.type == 4)
-		ft_putchar('d');
+		ft_putchar_buf('d');
 	else if (folder.type == 8)
-		ft_putchar('-');
+		ft_putchar_buf('-');
 	else if (folder.type == 10)
-		ft_putchar('l');
+		ft_putchar_buf('l');
 	str = ft_strjoinspe(av, folder.name);
 	folder.type == 10 ? lstat(str, &stats) : stat(str, &stats);
 	ft_mode(stats.st_mode);
-	ft_putstr("\t");
-	ft_putnbr(stats.st_nlink);
-	ft_putstr("\t");
-	ft_putstr(getpwuid(stats.st_uid)->pw_name);
-	ft_putstr("  ");
-	ft_putstr(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
-	ft_putstr("\t");
-	ft_putnbr(stats.st_size);
-	ft_putstr("\t");
+	ft_putstr_buf("\t");
+	ft_putnbr_buf(stats.st_nlink);
+	ft_putstr_buf("\t");
+	ft_putstr_buf(getpwuid(stats.st_uid)->pw_name);
+	ft_putstr_buf("  ");
+	ft_putstr_buf(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
+	ft_putstr_buf("\t");
+	ft_putnbr_buf(stats.st_size);
+	ft_putstr_buf("\t");
 	ft_putdate(stats.st_mtime);
-	ft_putstr("\t");
+	ft_putstr_buf("\t");
 	free(str);
 }
 
@@ -112,7 +112,7 @@ void		ft_blocks(char *path, int a, t_dir *folder)
 		}
 		i++;
 	}
-	ft_putstr("total ");
-	ft_putnbr(blocks);
-	ft_putchar('\n');
+	ft_putstr_buf("total ");
+	ft_putnbr_buf(blocks);
+	ft_putchar_buf('\n');
 }

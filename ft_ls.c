@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
+/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/11 15:09:51 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/21 17:56:07 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,21 +90,21 @@ t_dir					*ft_sort_dirname(t_dir *folder, size_t len)
 void					printl(struct stat stats, int type, char *name)
 {
 	ft_mode(stats.st_mode);
-	ft_putstr("\t");
-	ft_putnbr(stats.st_nlink);
-	ft_putstr("\t");
-	ft_putstr(getpwuid(stats.st_uid)->pw_name);
-	ft_putstr("  ");
-	ft_putstr(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
-	ft_putstr("\t");
-	ft_putnbr(stats.st_size);
-	ft_putstr("\t");
+	ft_putstr_buf("\t");
+	ft_putnbr_buf(stats.st_nlink);
+	ft_putstr_buf("\t");
+	ft_putstr_buf(getpwuid(stats.st_uid)->pw_name);
+	ft_putstr_buf("  ");
+	ft_putstr_buf(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
+	ft_putstr_buf("\t");
+	ft_putnbr_buf(stats.st_size);
+	ft_putstr_buf("\t");
 	ft_putdate(time(&stats.st_mtime));
-	ft_putchar('\t');
+	ft_putchar_buf('\t');
 	ft_color(type, stats.st_mode);
-	ft_putstr(name);
-	ft_putstr(RESET);
-	ft_putchar('\n');
+	ft_putstr_buf(name);
+	ft_putstr_buf(RESET);
+	ft_putchar_buf('\n');
 }
 
 void					tarace(char *av, t_options options, DIR *dir)
@@ -122,11 +122,11 @@ void					tarace(char *av, t_options options, DIR *dir)
 			if (ft_strcmp(read->d_name, av) == 0)
 			{
 				if (read->d_type == 4)
-					ft_putchar('d');
+					ft_putchar_buf('d');
 				else if (read->d_type == 8)
-					ft_putchar('-');
+					ft_putchar_buf('-');
 				else if (read->d_type == 10)
-					ft_putchar('l');
+					ft_putchar_buf('l');
 				str = ft_strjoinspe(getpath(av), read->d_name);
 				read->d_type == 10 ? lstat(str, &stats) : stat(str, &stats);
 				printl(stats, read->d_type, read->d_name);
@@ -138,9 +138,9 @@ void					tarace(char *av, t_options options, DIR *dir)
 
 void		printmult(char *av)
 {
-	ft_putstr("\n");
-	ft_putstr(av);
-	ft_putstr(":\n");
+	ft_putstr_buf("\n");
+	ft_putstr_buf(av);
+	ft_putstr_buf(":\n");
 }
 
 void		options_r(t_options options, t_dir *folder, char *av, char *path)
@@ -158,8 +158,8 @@ void		options_r(t_options options, t_dir *folder, char *av, char *path)
 			&& folder[i].name[1] == '.' && folder[i].name[2] == '\0'))
 		{
 			path = ft_strjoinspe(av, folder[i].name);
-			ft_putstr(path);
-			ft_putstr(":\n");
+			ft_putstr_buf(path);
+			ft_putstr_buf(":\n");
 			ft_ls(options, path);
 			ft_strdel(&path);
 		}
@@ -199,13 +199,13 @@ void					ft_ls(t_options options, char *av)
 	flag = 0;
 	if (ft_affls(folder, options, av))
 		flag = 1;
-	ft_putchar('\n');
+	ft_putchar_buf('\n');
 	if (flag)
 		options_r(options, folder, av, path);
 	freedir(folder);
 	free(folder);
 	if (options.mult)
-		ft_putstr("\n");
+		ft_putstr_buf("\n");
 }
 
 size_t					ft_tablen(char **tab)
@@ -293,7 +293,7 @@ void		mainr(t_options options, int ac, char **arg, int i)
 			ft_ls(options, arg[ac]);
 			ac--;
 		}
-		ft_putchar('\n');
+		ft_putchar_buf('\n');
 	}
 	else
 	{
@@ -302,7 +302,7 @@ void		mainr(t_options options, int ac, char **arg, int i)
 			ft_ls(options, arg[i]);
 			i++;
 		}
-		ft_putchar('\n');
+		ft_putchar_buf('\n');
 	}
 }
 
@@ -322,6 +322,7 @@ int			main(int ac, char **av)
 	if (i == ac)
 	{
 		ft_ls(options, ".");
+		ft_buf(1, NULL, -1);
 		return (0);
 	}
 	else
@@ -329,5 +330,6 @@ int			main(int ac, char **av)
 	if (ac >= i + 2)
 		options.mult = 1;
 	mainr(options, ac, arg, i);
+	ft_buf(1, NULL, -1);
 	return (0);
 }
