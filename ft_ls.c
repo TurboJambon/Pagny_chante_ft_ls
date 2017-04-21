@@ -6,7 +6,7 @@
 /*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/21 17:56:07 by niragne          ###   ########.fr       */
+/*   Updated: 2017/04/21 20:03:52 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,11 +167,10 @@ void		options_r(t_options options, t_dir *folder, char *av, char *path)
 	}
 }
 
-t_dir		*initfolder(t_options options, char *av, DIR *dir, t_dir *folder)
+t_dir		*initfolder(t_options options, char *av, t_dir *folder)
 {
 	if (options.mult)
 		printmult(av);
-	options.len = ft_dirlen(dir, options);
 	folder = ft_folder(options, av, options.len, -1);
 	folder = ft_sort_dirname(folder, options.len);
 	if (options.l)
@@ -195,7 +194,8 @@ void					ft_ls(t_options options, char *av)
 		return ;
 	}
 	folder = NULL;
-	folder = initfolder(options, av, dir, folder);
+	options.len = ft_dirlen(dir, options);
+	folder = initfolder(options, av, folder);
 	flag = 0;
 	if (ft_affls(folder, options, av))
 		flag = 1;
@@ -314,6 +314,8 @@ int			main(int ac, char **av)
 
 	options = create_struct();
 	i = get_options(av, &options);
+	if (ac >= i + 2)
+		options.mult = 1;
 	if (i == -1)
 	{
 		ft_putendl("usage: ls [-Ralrt] [file ...]");
@@ -327,8 +329,7 @@ int			main(int ac, char **av)
 	}
 	else
 		arg = ft_sort_spe(av, i);
-	if (ac >= i + 2)
-		options.mult = 1;
+	
 	mainr(options, ac, arg, i);
 	ft_buf(1, NULL, -1);
 	return (0);
