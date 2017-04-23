@@ -6,60 +6,11 @@
 /*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/21 20:04:38 by niragne          ###   ########.fr       */
+/*   Updated: 2017/04/22 15:57:33 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
-
-void		ft_color(int type, mode_t mode)
-{
-	if (type == 4)
-		ft_putstr_buf(CYN);
-	else if (type == 10)
-		ft_putstr_buf(MAG);
-	else if (mode & 0x049)
-		ft_putstr_buf(RED);
-}
-
-void		putyear(time_t date)
-{
-	char		*str;
-	int			i;
-
-	i = 3;
-	str = ctime(&date);
-	while (i <= 9)
-	{
-		ft_putchar_buf(str[i]);
-		i++;
-	}
-	ft_putchar_buf(' ');
-	ft_buf(1, str + 20, 4);
-}
-
-void		putdatejambon(time_t date)
-{
-	int		i;
-	char	*str;
-
-	str = ctime(&date);
-	i = 4;
-	ft_putchar_buf(' ');
-	while (i <= 15)
-	{
-		ft_putchar_buf(str[i]);
-		i++;
-	}
-}
-
-void		ft_putdate(time_t date)
-{
-	if (time(NULL) - date > 15768000)
-		putyear(date);
-	else
-		putdatejambon(date);
-}
 
 void	ft_displayname(t_dir folder)
 {
@@ -108,11 +59,12 @@ int		ft_affls(t_dir *folder, t_options options, char *av)
 		i = options.len - 1;
 	while (folder[i].type && i >= 0)
 	{
-		if (folder[i].type == 4 && options.R)
+		if (folder[i].type == 4 && options.r2)
 			flag = 1;
 		ft_displayinfos(options, folder[i], av);
 		(options.r) ? i-- : i++;
 	}
-	ft_putchar_buf('\n');
+	if (!options.l)
+		ft_putchar_buf('\n');
 	return (flag);
 }

@@ -6,7 +6,7 @@
 /*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 17:15:32 by niragne           #+#    #+#             */
-/*   Updated: 2017/04/21 18:58:05 by niragne          ###   ########.fr       */
+/*   Updated: 2017/04/22 16:06:23 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ft_if(int fd, int size, t_uchar **buf, int *p)
 	}
 	if (size == -1)
 	{
-		write(fd, *buf, *p);
+		write(fd, *buf, *p - 1);
 		*p = 0;
 		return (0);
 	}

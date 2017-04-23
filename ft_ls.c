@@ -6,7 +6,7 @@
 /*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/21 20:03:52 by niragne          ###   ########.fr       */
+/*   Updated: 2017/04/22 16:12:25 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,9 @@ void					printl(struct stat stats, int type, char *name)
 	ft_color(type, stats.st_mode);
 	ft_putstr_buf(name);
 	ft_putstr_buf(RESET);
-	ft_putchar_buf('\n');
 }
 
-void					tarace(char *av, t_options options, DIR *dir)
+void					lsfile(char *av, t_options options, DIR *dir)
 {
 	struct dirent		*read;
 	struct stat			stats;
@@ -131,6 +130,7 @@ void					tarace(char *av, t_options options, DIR *dir)
 				read->d_type == 10 ? lstat(str, &stats) : stat(str, &stats);
 				printl(stats, read->d_type, read->d_name);
 				free(str);
+				ft_putchar_buf('\n');
 			}
 		}
 	}
@@ -190,7 +190,7 @@ void					ft_ls(t_options options, char *av)
 	path = NULL;
 	if (!(dir = opendir(av)))
 	{
-		tarace(av, options, dir);
+		lsfile(av, options, dir);
 		return ;
 	}
 	folder = NULL;
@@ -293,7 +293,6 @@ void		mainr(t_options options, int ac, char **arg, int i)
 			ft_ls(options, arg[ac]);
 			ac--;
 		}
-		ft_putchar_buf('\n');
 	}
 	else
 	{
@@ -302,7 +301,6 @@ void		mainr(t_options options, int ac, char **arg, int i)
 			ft_ls(options, arg[i]);
 			i++;
 		}
-		ft_putchar_buf('\n');
 	}
 }
 
@@ -329,8 +327,13 @@ int			main(int ac, char **av)
 	}
 	else
 		arg = ft_sort_spe(av, i);
-	
 	mainr(options, ac, arg, i);
+	if (options.mult)
+	{
+		if (!options.l)
+			ft_putchar_buf('\n');
+		ft_putchar_buf('\n');
+	}
 	ft_buf(1, NULL, -1);
 	return (0);
 }

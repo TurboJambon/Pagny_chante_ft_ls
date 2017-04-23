@@ -6,7 +6,7 @@
 /*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:00:14 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/21 17:35:51 by niragne          ###   ########.fr       */
+/*   Updated: 2017/04/22 15:47:44 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_options	create_struct(void)
 {
 	t_options ret;
 
-	ret.R = 0;
+	ret.r2 = 0;
 	ret.a = 0;
 	ret.r = 0;
 	ret.l = 0;
@@ -27,7 +27,7 @@ t_options	create_struct(void)
 int			add_option(char c, t_options *options)
 {
 	if (c == 'R')
-		return (options->R = 1);
+		return (options->r2 = 1);
 	if (c == 'a')
 		return (options->a = 1);
 	if (c == 'r')
