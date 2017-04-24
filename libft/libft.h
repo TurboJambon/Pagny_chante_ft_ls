@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/10 16:35:33 by niragne           #+#    #+#             */
-/*   Updated: 2017/02/02 22:51:16 by niragne          ###   ########.fr       */
+/*   Updated: 2017/04/24 15:34:23 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,8 @@ void			ft_foreach(int *tab, int length, void (*f)(int));
 char			*ft_rot(char *str, int r);
 void			*ft_realloc(void *ptr, size_t size);
 char			*fd_to_str(int fd);
+char			*ft_strndup(char const *s1, int n);
+char			*ft_strrnchr(const char *s, int c, int n);
+int				ft_swaparr(char **tab, int i);
 
 #endif

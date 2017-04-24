@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ls.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/04/22 15:54:19 by niragne          ###   ########.fr       */
+/*   Updated: 2017/04/24 15:38:31 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define CYN   "\x1B[1;96m"
 # define WHT   "\x1B[37m"
 # define RESET "\x1B[0m"
+# define OPT 	t_options
 
 typedef unsigned long int		t_ulint;
 typedef unsigned char			t_uchar;
@@ -87,5 +88,13 @@ void				ft_putnbr_buf(int n);
 void				ft_putendl_buf_fd(char *str, int fd);
 int					ft_buf(int fd, void *str, int size);
 void				ft_putdate(time_t date);
+void				printl(struct stat stats, int type, char *name);
+void				options_r(OPT options, t_dir *folder, char *av, char *path);
+void				printmult(char *av);
+t_dir				*ft_sort_dirname(t_dir *folder, size_t len);
+void				lsfile(char *av, t_options options, DIR *dir);
+char				**ft_sort_spe(char **tab, int j);
+char				*getpath(char *path);
+t_dir				*ft_sort_dirname(t_dir *folder, size_t len);
 
 #endif

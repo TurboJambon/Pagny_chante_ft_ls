@@ -3,45 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/22 16:12:25 by niragne          ###   ########.fr       */
+/*   Updated: 2017/04/24 14:59:59 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-char					*ft_strrnchr(const char *s, int c, int n)
-{
-	int		len;
-
-	len = n;
-	while (len && s[len] != (char)c)
-		len--;
-	if (s[len] == (char)c)
-		return ((char *)&s[len]);
-	return (NULL);
-}
-
-char					*ft_strndup(char const *s1, int n)
-{
-	char		*new;
-	size_t		i;
-
-	i = 0;
-	if ((new = ft_strnew(ft_strlen(s1))))
-	{
-		while (i < (size_t)n)
-		{
-			new[i] = s1[i];
-			i++;
-		}
-	}
-	return (new);
-}
-
-char					*getpath(char *path)
+char				*getpath(char *path)
 {
 	int		len;
 	char	*ptr;
@@ -59,115 +30,7 @@ char					*getpath(char *path)
 	return (ret);
 }
 
-t_dir					*ft_sort_dirname(t_dir *folder, size_t len)
-{
-	t_dir	tmp;
-	int		flag;
-	size_t	i;
-
-	if (!folder->type)
-		return (folder);
-	flag = 1;
-	while (flag)
-	{
-		flag = 0;
-		i = 0;
-		while (i <= len && folder[i + 1].type)
-		{
-			if (strcmp(folder[i].name, folder[i + 1].name) > 0)
-			{
-				tmp = folder[i];
-				folder[i] = folder[i + 1];
-				folder[i + 1] = tmp;
-				flag = 1;
-			}
-			i++;
-		}
-	}
-	return (folder);
-}
-
-void					printl(struct stat stats, int type, char *name)
-{
-	ft_mode(stats.st_mode);
-	ft_putstr_buf("\t");
-	ft_putnbr_buf(stats.st_nlink);
-	ft_putstr_buf("\t");
-	ft_putstr_buf(getpwuid(stats.st_uid)->pw_name);
-	ft_putstr_buf("  ");
-	ft_putstr_buf(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
-	ft_putstr_buf("\t");
-	ft_putnbr_buf(stats.st_size);
-	ft_putstr_buf("\t");
-	ft_putdate(time(&stats.st_mtime));
-	ft_putchar_buf('\t');
-	ft_color(type, stats.st_mode);
-	ft_putstr_buf(name);
-	ft_putstr_buf(RESET);
-}
-
-void					lsfile(char *av, t_options options, DIR *dir)
-{
-	struct dirent		*read;
-	struct stat			stats;
-	char				*str;
-
-	printerr(av, errno, options.l);
-	if (options.l)
-	{
-		dir = opendir(getpath(av));
-		while ((read = readdir(dir)))
-		{
-			if (ft_strcmp(read->d_name, av) == 0)
-			{
-				if (read->d_type == 4)
-					ft_putchar_buf('d');
-				else if (read->d_type == 8)
-					ft_putchar_buf('-');
-				else if (read->d_type == 10)
-					ft_putchar_buf('l');
-				str = ft_strjoinspe(getpath(av), read->d_name);
-				read->d_type == 10 ? lstat(str, &stats) : stat(str, &stats);
-				printl(stats, read->d_type, read->d_name);
-				free(str);
-				ft_putchar_buf('\n');
-			}
-		}
-	}
-}
-
-void		printmult(char *av)
-{
-	ft_putstr_buf("\n");
-	ft_putstr_buf(av);
-	ft_putstr_buf(":\n");
-}
-
-void		options_r(t_options options, t_dir *folder, char *av, char *path)
-{
-	int	i;
-
-	i = 0;
-	if (options.r)
-		i = options.len - 1;
-	while (folder[i].type && i >= 0)
-	{
-		if (folder[i].type == 4
-			&& (folder[i].name[0] != '.' && folder[i].name[1] != '\0')
-			&& !(folder[i].name[0] == '.'
-			&& folder[i].name[1] == '.' && folder[i].name[2] == '\0'))
-		{
-			path = ft_strjoinspe(av, folder[i].name);
-			ft_putstr_buf(path);
-			ft_putstr_buf(":\n");
-			ft_ls(options, path);
-			ft_strdel(&path);
-		}
-		options.r ? i-- : i++;
-	}
-}
-
-t_dir		*initfolder(t_options options, char *av, t_dir *folder)
+t_dir				*initfolder(t_options options, char *av, t_dir *folder)
 {
 	if (options.mult)
 		printmult(av);
@@ -180,7 +43,7 @@ t_dir		*initfolder(t_options options, char *av, t_dir *folder)
 	return (folder);
 }
 
-void					ft_ls(t_options options, char *av)
+void				ft_ls(t_options options, char *av)
 {
 	DIR					*dir;
 	t_dir				*folder;
@@ -208,82 +71,7 @@ void					ft_ls(t_options options, char *av)
 		ft_putstr_buf("\n");
 }
 
-size_t					ft_tablen(char **tab)
-{
-	int		i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
-
-int						ft_swaparr(char **tab, int i)
-{
-	char *tmp;
-
-	tmp = tab[i];
-	*tab[i] = *tab[i + 1];
-	*tab[i + 1] = *tmp;
-	return (1);
-}
-
-char					**ft_sort_av(char **av, int i)
-{
-	char	**tab;
-	int		flag;
-	int		j;
-
-	tab = malloc(sizeof(char*) * ft_tablen(av) + 1);
-	j = -1;
-	while (av[i])
-	{
-		tab[++j] = ft_strdup(av[i]);
-		i++;
-	}
-	flag = 1;
-	while (flag)
-	{
-		flag = 0;
-		i = 0;
-		while ((size_t)i < ft_tablen(tab) - 1)
-		{
-			if (ft_strcmp(tab[i], tab[i + 1]) > 0)
-				flag = ft_swaparr(tab, i);
-			i++;
-		}
-	}
-	tab[i + 1] = NULL;
-	return (tab);
-}
-
-char				**ft_sort_spe(char **tab, int j)
-{
-	char	*tmp;
-	int		flag;
-	size_t	i;
-
-	flag = 1;
-	while (flag)
-	{
-		flag = 0;
-		i = j + 1;
-		while (i < ft_tablen(tab) - 1)
-		{
-			if (ft_strcmp(tab[i], tab[i + 1]) > 0)
-			{
-				tmp = tab[i];
-				tab[i] = tab[i + 1];
-				tab[i + 1] = tmp;
-				flag = 1;
-			}
-			i++;
-		}
-	}
-	return (tab);
-}
-
-void		mainr(t_options options, int ac, char **arg, int i)
+void				mainr(t_options options, int ac, char **arg, int i)
 {
 	if (options.r)
 	{
@@ -304,7 +92,7 @@ void		mainr(t_options options, int ac, char **arg, int i)
 	}
 }
 
-int			main(int ac, char **av)
+int					main(int ac, char **av)
 {
 	t_options		options;
 	int				i;

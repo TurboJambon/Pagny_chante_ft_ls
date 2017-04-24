@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: niragne <niragne@student.42.fr>            +#+  +:+       +#+         #
+#    By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/09 17:19:21 by niragne           #+#    #+#              #
-#    Updated: 2017/02/12 16:35:56 by niragne          ###   ########.fr        #
+#    Updated: 2017/04/24 14:41:41 by dchirol          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,6 +92,9 @@ SRC = ft_putchar.c \
 	  ft_iscollinear.c \
 	  fd_to_str.c \
 	  ft_realloc.c \
+	  ft_strrnchr.c \
+	  ft_strndup.c \
+	  ft_swaparr.c \
 	  get_next_line.c
 
 

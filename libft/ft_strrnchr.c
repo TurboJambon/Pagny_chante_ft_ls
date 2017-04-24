@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   others.c                                           :+:      :+:    :+:   */
+/*   ft_strrnchr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/05 18:50:37 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/24 15:00:34 by dchirol          ###   ########.fr       */
+/*   Created: 2017/04/24 14:07:37 by dchirol           #+#    #+#             */
+/*   Updated: 2017/04/24 14:09:46 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ls.h"
+#include "libft.h"
 
-void	ft_mode(mode_t n)
+char					*ft_strrnchr(const char *s, int c, int n)
 {
-	mode_t	i;
+	int		len;
 
-	i = 0x100;
-	while (i > 0)
-	{
-		if (n & i)
-		{
-			if (i & 0x124)
-				ft_putchar_buf('r');
-			else if (i & 0x092)
-				ft_putchar_buf('w');
-			else if (i & 0x049)
-				ft_putchar_buf('x');
-		}
-		else
-			ft_putchar_buf('-');
-		i >>= 1;
-	}
+	len = n;
+	while (len && s[len] != (char)c)
+		len--;
+	if (s[len] == (char)c)
+		return ((char *)&s[len]);
+	return (NULL);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   date.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 15:53:25 by niragne           #+#    #+#             */
-/*   Updated: 2017/04/22 15:59:10 by niragne          ###   ########.fr       */
+/*   Updated: 2017/04/24 14:29:42 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-void		ft_color(int type, mode_t mode)
+void			ft_color(int type, mode_t mode)
 {
 	if (type == 4)
 		ft_putstr_buf(CYN);

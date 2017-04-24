@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   others.c                                           :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/05 18:50:37 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/24 15:00:34 by dchirol          ###   ########.fr       */
+/*   Created: 2017/04/24 14:07:46 by dchirol           #+#    #+#             */
+/*   Updated: 2017/04/24 14:08:42 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ls.h"
+#include "libft.h"
 
-void	ft_mode(mode_t n)
+char					*ft_strndup(char const *s1, int n)
 {
-	mode_t	i;
+	char		*new;
+	size_t		i;
 
-	i = 0x100;
-	while (i > 0)
+	i = 0;
+	if ((new = ft_strnew(ft_strlen(s1))))
 	{
-		if (n & i)
+		while (i < (size_t)n)
 		{
-			if (i & 0x124)
-				ft_putchar_buf('r');
-			else if (i & 0x092)
-				ft_putchar_buf('w');
-			else if (i & 0x049)
-				ft_putchar_buf('x');
+			new[i] = s1[i];
+			i++;
 		}
-		else
-			ft_putchar_buf('-');
-		i >>= 1;
 	}
+	return (new);
 }

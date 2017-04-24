@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:14:28 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/22 15:21:15 by niragne          ###   ########.fr       */
+/*   Updated: 2017/04/24 14:22:14 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,32 +61,28 @@ t_dir		*ft_optiont(t_dir *folder, char *path, int a, int len)
 	return (ft_tsort(folder, len));
 }
 
-void		ft_optl(t_dir folder, char *av)
+void		options_r(t_options options, t_dir *folder, char *av, char *path)
 {
-	struct stat	stats;
-	char		*str;
+	int	i;
 
-	if (folder.type == 4)
-		ft_putchar_buf('d');
-	else if (folder.type == 8)
-		ft_putchar_buf('-');
-	else if (folder.type == 10)
-		ft_putchar_buf('l');
-	str = ft_strjoinspe(av, folder.name);
-	folder.type == 10 ? lstat(str, &stats) : stat(str, &stats);
-	ft_mode(stats.st_mode);
-	ft_putstr_buf("\t");
-	ft_putnbr_buf(stats.st_nlink);
-	ft_putstr_buf("\t");
-	ft_putstr_buf(getpwuid(stats.st_uid)->pw_name);
-	ft_putstr_buf("  ");
-	ft_putstr_buf(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
-	ft_putstr_buf("\t");
-	ft_putnbr_buf(stats.st_size);
-	ft_putstr_buf("\t");
-	ft_putdate(stats.st_mtime);
-	ft_putstr_buf("\t");
-	free(str);
+	i = 0;
+	if (options.r)
+		i = options.len - 1;
+	while (folder[i].type && i >= 0)
+	{
+		if (folder[i].type == 4
+			&& (folder[i].name[0] != '.' && folder[i].name[1] != '\0')
+			&& !(folder[i].name[0] == '.'
+			&& folder[i].name[1] == '.' && folder[i].name[2] == '\0'))
+		{
+			path = ft_strjoinspe(av, folder[i].name);
+			ft_putstr_buf(path);
+			ft_putstr_buf(":\n");
+			ft_ls(options, path);
+			ft_strdel(&path);
+		}
+		options.r ? i-- : i++;
+	}
 }
 
 void		ft_blocks(char *path, int a, t_dir *folder)
