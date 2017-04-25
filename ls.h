@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/04/24 15:38:31 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/24 20:41:58 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void				ft_putendl_buf_fd(char *str, int fd);
 int					ft_buf(int fd, void *str, int size);
 void				ft_putdate(time_t date);
 void				printl(struct stat stats, int type, char *name);
-void				options_r(OPT options, t_dir *folder, char *av, char *path);
+void				options_r(t_options options, t_dir *folder,
+					char *av, char *path);
 void				printmult(char *av);
 t_dir				*ft_sort_dirname(t_dir *folder, size_t len);
 void				lsfile(char *av, t_options options, DIR *dir);
