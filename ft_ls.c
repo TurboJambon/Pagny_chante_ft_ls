@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/26 15:31:20 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/26 16:12:50 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int					main(int ac, char **av)
 		return (0);
 	}
 	else
-		ft_sort_spe(av + i , ac, i);
+		ft_sort_spe(av + i, ac, i);
 	mainr(options, ac, av, i);
 	multnewline(options);
 	ft_buf(1, NULL, -1);

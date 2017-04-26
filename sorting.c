@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 14:26:34 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/26 15:47:15 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/26 16:13:53 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,7 @@ t_dir	*ft_sort_dirname(t_dir *folder, size_t len)
 	return (folder);
 }
 
-/*char	**ft_sort_av(char **av, int i)
-{
-	char	**tab;
-	int		flag;
-	int		j;
-
-	tab = malloc(sizeof(char*) * ft_tablen(av) + 1);
-	j = -1;
-	while (av[i])
-	{
-		tab[++j] = ft_strdup(av[i]);
-		i++;
-	}
-	flag = 1;
-	while (flag)
-	{
-		flag = 0;
-		i = 0;
-		while ((size_t)i < ft_tablen(tab) - 1)
-		{
-			if (ft_strcmp(tab[i], tab[i + 1]) > 0)
-				flag = ft_swaparr(tab, i);
-			i++;
-		}
-	}
-	tab[i + 1] = NULL;
-	return (tab);
-}*/
-
-int 	swapparam(char **tab, char *sort)
+int		swapparam(char **tab, char *sort)
 {
 	char *tmp;
 	char tmpsort;
@@ -80,16 +51,15 @@ int 	swapparam(char **tab, char *sort)
 	tmpsort = sort[0];
 	sort[0] = sort[1];
 	sort[1] = tmpsort;
-
 	return (1);
 }
 
 void	afftab(char **tab, int k)
 {
 	int i;
-	
+
 	i = 0;
-	while(i < k)
+	while (i < k)
 	{
 		printf(" - %s\n", tab[i]);
 		i++;
@@ -99,9 +69,9 @@ void	afftab(char **tab, int k)
 void	ft_sort_spe(char **tab, int ac, int k)
 {
 	struct stat			stats;
-	char 				sort[ac - 1];
-	int 				i;
-	int 				flag;
+	char				sort[ac - 1];
+	int					i;
+	int					flag;
 
 	i = 0;
 	while (i < ac - k)
