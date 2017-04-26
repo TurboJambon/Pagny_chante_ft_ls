@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 18:50:37 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/24 20:14:17 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/25 20:38:22 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,14 @@ void	ft_mode(mode_t n)
 	if (n & 01000)
 		mode[8] = 'T' * (mode[8] == '-') + 't' * (mode[8] == 'x');
 	ft_buf(1, mode, 9);
+}
+
+void	multnewline(t_options options)
+{
+	if (options.mult)
+	{
+		if (!options.l)
+			ft_putchar_buf('\n');
+		ft_putchar_buf('\n');
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 14:26:34 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/24 14:44:11 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/26 15:47:15 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_dir	*ft_sort_dirname(t_dir *folder, size_t len)
 	return (folder);
 }
 
-char	**ft_sort_av(char **av, int i)
+/*char	**ft_sort_av(char **av, int i)
 {
 	char	**tab;
 	int		flag;
@@ -67,30 +67,60 @@ char	**ft_sort_av(char **av, int i)
 	}
 	tab[i + 1] = NULL;
 	return (tab);
+}*/
+
+int 	swapparam(char **tab, char *sort)
+{
+	char *tmp;
+	char tmpsort;
+
+	tmp = tab[0];
+	tab[0] = tab[1];
+	tab[1] = tmp;
+	tmpsort = sort[0];
+	sort[0] = sort[1];
+	sort[1] = tmpsort;
+
+	return (1);
 }
 
-char	**ft_sort_spe(char **tab, int j)
+void	afftab(char **tab, int k)
 {
-	char	*tmp;
-	int		flag;
-	size_t	i;
+	int i;
+	
+	i = 0;
+	while(i < k)
+	{
+		printf(" - %s\n", tab[i]);
+		i++;
+	}
+}
 
+void	ft_sort_spe(char **tab, int ac, int k)
+{
+	struct stat			stats;
+	char 				sort[ac - 1];
+	int 				i;
+	int 				flag;
+
+	i = 0;
+	while (i < ac - k)
+	{
+		stat(tab[i], &stats);
+		sort[i] = (stats.st_mode & S_IFDIR) > 0;
+		i++;
+	}
 	flag = 1;
 	while (flag)
 	{
 		flag = 0;
-		i = j + 1;
-		while (i < ft_tablen(tab) - 1)
+		i = 0;
+		while (i < ac - k - 1)
 		{
-			if (ft_strcmp(tab[i], tab[i + 1]) > 0)
-			{
-				tmp = tab[i];
-				tab[i] = tab[i + 1];
-				tab[i + 1] = tmp;
-				flag = 1;
-			}
+			if (sort[i] > sort[i + 1] || (ft_strcmp(tab[i], tab[i + 1]) > 0
+				&& sort[i] == sort[i + 1]))
+				flag = swapparam(tab + i, sort + i);
 			i++;
 		}
 	}
-	return (tab);
 }

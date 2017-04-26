@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/04/24 20:41:58 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/26 15:24:33 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,10 @@ void				options_r(t_options options, t_dir *folder,
 void				printmult(char *av);
 t_dir				*ft_sort_dirname(t_dir *folder, size_t len);
 void				lsfile(char *av, t_options options, DIR *dir);
-char				**ft_sort_spe(char **tab, int j);
+void				ft_sort_spe(char **tab, int ac, int k);
 char				*getpath(char *path);
 t_dir				*ft_sort_dirname(t_dir *folder, size_t len);
+void				ft_putstr_buf_fd(char *str, int fd);
+void				multnewline(t_options options);
 
 #endif

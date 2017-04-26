@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 14:17:27 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/26 15:12:50 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/26 15:12:01 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int						ft_swaparr(char **tab, int i)
 	char *tmp;
 
 	tmp = tab[i];
-	tab[i] = tab[i + 1];
-	tab[i + 1] = tmp;
+	*tab[i] = *tab[i + 1];
+	*tab[i + 1] = tmp;
 	return (1);
 }

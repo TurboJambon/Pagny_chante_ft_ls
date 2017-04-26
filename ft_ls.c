@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/24 14:59:59 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/26 15:31:20 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,17 +96,13 @@ int					main(int ac, char **av)
 {
 	t_options		options;
 	int				i;
-	char			**arg;
 
 	options = create_struct();
 	i = get_options(av, &options);
 	if (ac >= i + 2)
 		options.mult = 1;
 	if (i == -1)
-	{
-		ft_putendl("usage: ls [-Ralrt] [file ...]");
-		return (0);
-	}
+		return (puterr("usage: ls [-Ralrt] [file ...]\n"));
 	if (i == ac)
 	{
 		ft_ls(options, ".");
@@ -114,14 +110,9 @@ int					main(int ac, char **av)
 		return (0);
 	}
 	else
-		arg = ft_sort_spe(av, i);
-	mainr(options, ac, arg, i);
-	if (options.mult)
-	{
-		if (!options.l)
-			ft_putchar_buf('\n');
-		ft_putchar_buf('\n');
-	}
+		ft_sort_spe(av + i , ac, i);
+	mainr(options, ac, av, i);
+	multnewline(options);
 	ft_buf(1, NULL, -1);
 	return (0);
 }

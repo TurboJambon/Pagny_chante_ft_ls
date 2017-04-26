@@ -6,11 +6,13 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 13:58:02 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/24 14:43:40 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/25 20:38:21 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
+#include <sys/acl.h>
+#include <sys/types.h>
 
 void		printl(struct stat stats, int type, char *name)
 {
