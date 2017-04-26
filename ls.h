@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/04/26 15:24:33 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/04/26 17:05:56 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <errno.h>
+# include <sys/types.h>
+# include <sys/acl.h>
 
 # define NB_OPTIONS 5
 # define OPTIONS "Rtrla"
