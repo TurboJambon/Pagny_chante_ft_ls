@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 17:30:05 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:51:22 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ void	printmult(char *av)
 	ft_putstr_buf(":\n");
 }
 
-void	ft_displayname(t_dir folder)
+void	ft_displayname(t_dir folder, t_options options)
 {
 	ft_color(folder.type, folder.mode);
 	ft_putstr_buf(folder.name);
+	if (options.p && folder.type == 4)
+		ft_putchar_buf('/');
 	ft_putstr_buf(RESET);
 }
 
@@ -61,7 +63,7 @@ void	ft_displayinfos(t_options options, t_dir folder, char *av)
 	if (options.l)
 	{
 		ft_optl(folder, av, options);
-		ft_displayname(folder);
+		ft_displayname(folder, options);
 		if (folder.type == 10)
 		{
 			ft_putstr_buf(" -> ");
@@ -75,7 +77,7 @@ void	ft_displayinfos(t_options options, t_dir folder, char *av)
 	}
 	else
 	{
-		ft_displayname(folder);
+		ft_displayname(folder, options);
 		ft_putchar_buf('\t');
 	}
 	ft_putstr_buf(RESET);

@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:00:14 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 17:40:56 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:46:31 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int			add_option(char c, t_options *options)
 		return (options->l = 1);
 	if (c == 't')
 		return (options->t = 1);
+	if (c == 'p')
+		return (options->p = 1);
 	if (c == 'u')
 		return (options->u = 1);
 	if (c == 'f')
@@ -84,7 +86,7 @@ int			get_options(char **av, t_options *options)
 	return (i);
 }
 
-void	del_options(t_options *options)
+void		del_options(t_options *options)
 {
 	options->r = 0;
 	options->t = 0;

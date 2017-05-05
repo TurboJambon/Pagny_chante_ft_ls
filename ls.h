@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/05/05 17:41:12 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:50:26 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <sys/types.h>
 # include <sys/acl.h>
 
-# define OPTIONS "Rafglrtu"
+# define OPTIONS "Rafglprtu"
 # define RED   "\x1B[31m"
 # define GRN   "\x1B[32m"
 # define YEL   "\x1B[33m"
@@ -50,6 +50,7 @@ typedef struct		s_options {
 	int		u;
 	int		f;
 	int		g;
+	int		p;
 	int		mult;
 	size_t	len;
 }					t_options;
