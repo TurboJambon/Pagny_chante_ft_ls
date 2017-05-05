@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:00:14 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 17:29:51 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:40:56 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,10 @@ int			get_options(char **av, t_options *options)
 		}
 	}
 	return (i);
+}
+
+void	del_options(t_options *options)
+{
+	options->r = 0;
+	options->t = 0;
 }
