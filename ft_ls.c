@@ -6,7 +6,7 @@
 /*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 18:36:04 by niragne          ###   ########.fr       */
+/*   Updated: 2017/05/05 18:51:37 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,5 @@ int					main(int ac, char **av)
 	mainr(options, ac, av, i);
 	multnewline(options);
 	ft_buf(1, NULL, -1);
-	//while(1);
 	return (0);
 }

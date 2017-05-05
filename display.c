@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
+/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 18:03:19 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 18:50:42 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	lsfile(char *av, t_options options, DIR *dir)
 	static char			type[13] = "?fc-d-b---l-s";
 
 	printerr(av, errno, options.l);
+	if (errno == 13)
+		return ;
 	if (options.l)
 	{
 		dir = opendir(getpath(av));

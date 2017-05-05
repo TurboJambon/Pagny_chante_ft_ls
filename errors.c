@@ -6,7 +6,7 @@
 /*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 23:46:10 by niragne           #+#    #+#             */
-/*   Updated: 2017/05/05 18:37:28 by niragne          ###   ########.fr       */
+/*   Updated: 2017/05/05 18:48:43 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,11 @@ void	printerr(char *arg, int err, int flaf)
 	{
 		ft_putstr_buf(arg);
 		ft_putchar_buf('\t');
+	}
+	else if (err == 13)
+	{
+		ft_putstr_buf("ls: ");
+		ft_putstr_buf(arg);
+		ft_putstr_buf(": Permission denied\n\n");
 	}
 }
