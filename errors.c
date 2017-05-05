@@ -6,7 +6,7 @@
 /*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 23:46:10 by niragne           #+#    #+#             */
-/*   Updated: 2017/04/21 17:28:51 by niragne          ###   ########.fr       */
+/*   Updated: 2017/05/05 18:37:28 by niragne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	printerr(char *arg, int err, int flaf)
 	{
 		ft_putstr_buf("ls: ");
 		ft_putstr_buf(arg);
-		ft_putstr_buf(": No such file or directory\n");
+		ft_putstr_buf(": No such file or directory\n\n");
 	}
 	else if (err == 20 && !flaf)
 	{
