@@ -6,20 +6,11 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 13:58:02 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/26 18:03:39 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 14:07:03 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
-
-/*void	print_acl(char *av)
-{
-	struct _acl *prout;
-
-	prout = acl_get_file(av, ACL_TYPE_DEFAULT);
-	printf("%lu\n", prout->AclRevision);
-	//printf("%lu\n", acl_get_file(av, ACL_TYPE_ACCESS));
-}*/
 
 void		printl(struct stat stats, int type, char *name)
 {
@@ -54,7 +45,6 @@ void		ft_optl(t_dir folder, char *av)
 	str = ft_strjoinspe(av, folder.name);
 	folder.type == 10 ? lstat(str, &stats) : stat(str, &stats);
 	ft_mode(stats.st_mode);
-	//print_acl(av);
 	ft_putstr_buf("\t");
 	ft_putnbr_buf(stats.st_nlink);
 	ft_putstr_buf("\t");
