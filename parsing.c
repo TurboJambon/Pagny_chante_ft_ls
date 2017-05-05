@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:00:14 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 17:26:41 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:29:51 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_options	create_struct(void)
 	ret.t = 0;
 	ret.u = 0;
 	ret.f = 0;
+	ret.g = 0;
 	return (ret);
 }
 
@@ -42,6 +43,8 @@ int			add_option(char c, t_options *options)
 		return (options->u = 1);
 	if (c == 'f')
 		return ((options->f = 1) && (options->a = 1));
+	if (c == 'g')
+		return ((options->g = 1) && (options->l = 1));
 	return (-1);
 }
 

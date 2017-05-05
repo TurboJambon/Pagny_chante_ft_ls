@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 13:58:02 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 16:48:29 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:32:23 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void		printl(struct stat stats, int type, char *name, t_options options)
 	ft_putstr_buf("\t");
 	ft_putnbr_buf(stats.st_nlink);
 	ft_putstr_buf("\t");
-	ft_putstr_buf(getpwuid(stats.st_uid)->pw_name);
+	if (!options.g)
+		ft_putstr_buf(getpwuid(stats.st_uid)->pw_name);
 	ft_putstr_buf("  ");
 	ft_putstr_buf(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
 	ft_putstr_buf("\t");
@@ -49,7 +50,8 @@ void		ft_optl(t_dir folder, char *av, t_options options)
 	ft_putstr_buf("\t");
 	ft_putnbr_buf(stats.st_nlink);
 	ft_putstr_buf("\t");
-	ft_putstr_buf(getpwuid(stats.st_uid)->pw_name);
+	if (!options.g)
+		ft_putstr_buf(getpwuid(stats.st_uid)->pw_name);
 	ft_putstr_buf("  ");
 	ft_putstr_buf(getgrgid(getpwuid(stats.st_uid)->pw_gid)->gr_name);
 	ft_putstr_buf("\t");
