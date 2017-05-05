@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:00:14 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 17:46:31 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:57:21 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ int			get_options(char **av, t_options *options)
 				if (add_option(av[i][j], options) == -1)
 				{
 					ft_putstr_buf_fd("ls: illegal option -- ", 2);
-					ft_putendl_buf_fd(&av[i][j], 1);
+					ft_putchar_buf_fd(av[i][j], 2);
+					ft_putchar_buf_fd('\n', 2);
 					return (puterr(""));
 				}
 			}

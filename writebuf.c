@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 17:18:14 by niragne           #+#    #+#             */
-/*   Updated: 2017/04/25 17:07:47 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:56:40 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void	ft_putstr_buf_fd(char *str, int fd)
 void	ft_putchar_buf(char c)
 {
 	ft_buf(1, &c, 1);
+}
+
+void	ft_putchar_buf_fd(char c, int fd)
+{
+	ft_buf(fd, &c, 1);
 }
 
 void	ft_putnbr_buf(int n)
