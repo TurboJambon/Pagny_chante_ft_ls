@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 17:16:55 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:27:10 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ t_dir				*initfolder(t_options options, char *av, t_dir *folder)
 	if (options.mult)
 		printmult(av);
 	folder = ft_folder(options, av, options.len, -1);
-	folder = ft_sort_dirname(folder, options.len);
+	if (!options.f)
+		folder = ft_sort_dirname(folder, options.len);
 	if (options.l)
 		ft_blocks(av, options.a, folder);
 	if (options.t)

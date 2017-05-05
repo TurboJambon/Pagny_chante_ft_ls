@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/05/05 17:16:56 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:25:20 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ typedef struct		s_options {
 	int		l;
 	int		a;
 	int		i;
-	int 	u;
+	int		u;
+	int		f;
 	int		mult;
 	size_t	len;
 }					t_options;
