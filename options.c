@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:14:28 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 17:32:37 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 18:11:01 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ void		options_r(t_options options, t_dir *folder, char *av, char *path)
 	{
 		if (folder[i].type == 4
 			&& !(folder[i].name[0] == '.' && folder[i].name[1] == '\0')
-			&& !(folder[i].name[0] == '.' && folder[i].name[1] == '.' && folder[i].name[2] == '\0'))
+			&& !(folder[i].name[0] == '.'
+			&& folder[i].name[1] == '.' && folder[i].name[2] == '\0'))
 		{
 			path = ft_strjoinspe(av, folder[i].name);
 			ft_putstr_buf(path);

@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 17:52:21 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 18:03:19 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	ft_displayname(t_dir folder, t_options options)
 {
 	ft_color(folder.type, folder.mode);
 	ft_putstr_buf(folder.name);
+	ft_putstr_buf(RESET);
 	if (options.p && folder.type == 4)
 		ft_putchar_buf('/');
-	ft_putstr_buf(RESET);
 }
 
 void	lsfile(char *av, t_options options, DIR *dir)

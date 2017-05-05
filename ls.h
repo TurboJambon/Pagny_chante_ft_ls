@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/05/05 17:56:24 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 18:15:14 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int					ft_dirlen(DIR *dir, t_options options);
 t_dir				*ft_folder(t_options options, char *path, int len, int i);
 void				ft_putdate(time_t date);
 t_dir				*ft_tsort(t_dir *folder, int len);
-t_dir				*ft_optiont(t_dir *folder, char *path, t_options options, int len);
+t_dir				*ft_optiont(t_dir *folder, char *path,
+					t_options options, int len);
 void				ft_optl(t_dir folder, char *av, t_options options);
 void				ft_blocks(char *path, int a, t_dir *folder);
 void				ft_mode(mode_t n);
@@ -93,7 +94,8 @@ void				ft_putnbr_buf(int n);
 void				ft_putendl_buf_fd(char *str, int fd);
 int					ft_buf(int fd, void *str, int size);
 void				ft_putdate(time_t date);
-void				printl(struct stat stats, int type, char *name, t_options options);
+void				printl(struct stat stats, int type, char *name,
+					t_options options);
 void				options_r(t_options options, t_dir *folder,
 					char *av, char *path);
 void				printmult(char *av);
@@ -107,5 +109,6 @@ void				multnewline(t_options options);
 t_dir				*ft_optionu(t_dir *folder, char *path, int a, int len);
 void				del_options(t_options *options);
 void				ft_putchar_buf_fd(char c, int fd);
+void				ft_putcharendl_buf_fd(char c, int fd);
 
 #endif

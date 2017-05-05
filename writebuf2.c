@@ -1,36 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   optionu.c                                          :+:      :+:    :+:   */
+/*   writebuf2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/05 16:38:45 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 18:05:06 by dchirol          ###   ########.fr       */
+/*   Created: 2017/05/05 18:13:14 by dchirol           #+#    #+#             */
+/*   Updated: 2017/05/05 18:13:39 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-t_dir		*ft_optionu(t_dir *folder, char *path, int a, int len)
+void	ft_putnbr_buf(int n)
 {
-	struct stat		stats;
-	int				i;
-	char			*str;
-
-	i = 0;
-	while (folder[i].type)
+	if (n == -2147483648)
+		ft_putstr_buf("-2147483648");
+	else if (!(n > 2147483647 || n < -2147483648))
 	{
-		if ((folder[i].name[0] == '.' && a)
-			|| a
-			|| (a == 0 && folder[i].name[0] != '.'))
+		if (n < 0)
 		{
-			str = ft_strjoinspe(path, folder[i].name);
-			lstat(str, &stats);
-			folder[i].time = stats.st_atime;
-			free(str);
+			n = -n;
+			ft_putchar_buf('-');
 		}
-		i++;
+		if (n >= 10)
+		{
+			ft_putnbr_buf(n / 10);
+			ft_putnbr_buf(n % 10);
+		}
+		else
+			ft_putchar_buf(n + '0');
 	}
-	return (ft_tsort(folder, len));
+}
+
+void	ft_putendl_buf_fd(char *str, int fd)
+{
+	size_t len;
+
+	len = ft_strlen(str);
+	ft_buf(fd, str, len);
+	ft_buf(fd, "\n", 1);
 }
