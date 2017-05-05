@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:14:28 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 15:57:03 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 16:06:22 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_dir		*ft_optiont(t_dir *folder, char *path, int a, int len)
 			|| (a == 0 && folder[i].name[0] != '.'))
 		{
 			str = ft_strjoinspe(path, folder[i].name);
-			stat(str, &stats);
+			lstat(str, &stats);
 			folder[i].time = stats.st_mtime;
 			free(str);
 		}

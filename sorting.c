@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 14:26:34 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/26 16:13:53 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 16:04:31 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_sort_spe(char **tab, int ac, int k)
 	i = 0;
 	while (i < ac - k)
 	{
-		stat(tab[i], &stats);
+		lstat(tab[i], &stats);
 		sort[i] = (stats.st_mode & S_IFDIR) > 0;
 		i++;
 	}
