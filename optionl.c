@@ -6,13 +6,13 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 13:58:02 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 14:07:03 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 16:48:29 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-void		printl(struct stat stats, int type, char *name)
+void		printl(struct stat stats, int type, char *name, t_options options)
 {
 	ft_mode(stats.st_mode);
 	ft_putstr_buf("\t");
@@ -24,6 +24,7 @@ void		printl(struct stat stats, int type, char *name)
 	ft_putstr_buf("\t");
 	ft_putnbr_buf(stats.st_size);
 	ft_putstr_buf("\t");
+	options.u ? ft_putdate(time(&stats.st_atime)) :
 	ft_putdate(time(&stats.st_mtime));
 	ft_putchar_buf('\t');
 	ft_color(type, stats.st_mode);
@@ -31,7 +32,7 @@ void		printl(struct stat stats, int type, char *name)
 	ft_putstr_buf(RESET);
 }
 
-void		ft_optl(t_dir folder, char *av)
+void		ft_optl(t_dir folder, char *av, t_options options)
 {
 	struct stat	stats;
 	char		*str;
@@ -54,6 +55,7 @@ void		ft_optl(t_dir folder, char *av)
 	ft_putstr_buf("\t");
 	ft_putnbr_buf(stats.st_size);
 	ft_putstr_buf("\t");
+	options.u ? ft_putdate(stats.st_atime) :
 	ft_putdate(stats.st_mtime);
 	ft_putstr_buf("\t");
 	free(str);

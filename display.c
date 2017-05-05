@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/26 17:02:29 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 16:52:43 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	lsfile(char *av, t_options options, DIR *dir)
 				ft_putchar_buf(type[read->d_type]);
 				str = ft_strjoinspe(getpath(av), read->d_name);
 				read->d_type == 10 ? lstat(str, &stats) : stat(str, &stats);
-				printl(stats, read->d_type, read->d_name);
+				printl(stats, read->d_type, read->d_name, options);
 				free(str);
 				ft_putchar_buf('\n');
 			}
@@ -60,7 +60,7 @@ void	ft_displayinfos(t_options options, t_dir folder, char *av)
 
 	if (options.l)
 	{
-		ft_optl(folder, av);
+		ft_optl(folder, av, options);
 		ft_displayname(folder);
 		if (folder.type == 10)
 		{

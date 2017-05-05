@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:14:28 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 16:06:22 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:12:09 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,20 @@ t_dir		*ft_tsort(t_dir *folder, int len)
 	return (folder);
 }
 
-t_dir		*ft_optiont(t_dir *folder, char *path, int a, int len)
+t_dir		*ft_optiont(t_dir *folder, char *path, t_options options, int len)
 {
 	struct stat		stats;
 	int				i;
 	char			*str;
 
+	if (options.u)
+		return (ft_optionu(folder, path, options.a, len));
 	i = 0;
 	while (folder[i].type)
 	{
-		if ((folder[i].name[0] == '.' && a)
-			|| a
-			|| (a == 0 && folder[i].name[0] != '.'))
+		if ((folder[i].name[0] == '.' && options.a)
+			|| options.a
+			|| (options.a == 0 && folder[i].name[0] != '.'))
 		{
 			str = ft_strjoinspe(path, folder[i].name);
 			lstat(str, &stats);

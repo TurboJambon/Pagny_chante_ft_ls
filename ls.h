@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/04/26 17:05:56 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:16:56 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@
 # include <sys/types.h>
 # include <sys/acl.h>
 
-# define NB_OPTIONS 5
-# define OPTIONS "Rtrla"
+# define OPTIONS "Ralrtu"
 # define RED   "\x1B[31m"
 # define GRN   "\x1B[32m"
 # define YEL   "\x1B[33m"
@@ -48,6 +47,7 @@ typedef struct		s_options {
 	int		l;
 	int		a;
 	int		i;
+	int 	u;
 	int		mult;
 	size_t	len;
 }					t_options;
@@ -76,8 +76,8 @@ int					ft_dirlen(DIR *dir, t_options options);
 t_dir				*ft_folder(t_options options, char *path, int len, int i);
 void				ft_putdate(time_t date);
 t_dir				*ft_tsort(t_dir *folder, int len);
-t_dir				*ft_optiont(t_dir *folder, char *path, int a, int len);
-void				ft_optl(t_dir folder, char *av);
+t_dir				*ft_optiont(t_dir *folder, char *path, t_options options, int len);
+void				ft_optl(t_dir folder, char *av, t_options options);
 void				ft_blocks(char *path, int a, t_dir *folder);
 void				ft_mode(mode_t n);
 int					ft_affls(t_dir *folder, t_options options, char *av);
@@ -90,7 +90,7 @@ void				ft_putnbr_buf(int n);
 void				ft_putendl_buf_fd(char *str, int fd);
 int					ft_buf(int fd, void *str, int size);
 void				ft_putdate(time_t date);
-void				printl(struct stat stats, int type, char *name);
+void				printl(struct stat stats, int type, char *name, t_options options);
 void				options_r(t_options options, t_dir *folder,
 					char *av, char *path);
 void				printmult(char *av);
@@ -101,5 +101,6 @@ char				*getpath(char *path);
 t_dir				*ft_sort_dirname(t_dir *folder, size_t len);
 void				ft_putstr_buf_fd(char *str, int fd);
 void				multnewline(t_options options);
+t_dir				*ft_optionu(t_dir *folder, char *path, int a, int len);
 
 #endif

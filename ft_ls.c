@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 16:04:28 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/05 17:16:55 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_dir				*initfolder(t_options options, char *av, t_dir *folder)
 	if (options.l)
 		ft_blocks(av, options.a, folder);
 	if (options.t)
-		folder = ft_optiont(folder, av, options.a, options.len);
+		folder = ft_optiont(folder, av, options, options.len);
 	return (folder);
 }
 
@@ -102,7 +102,7 @@ int					main(int ac, char **av)
 	if (ac >= i + 2)
 		options.mult = 1;
 	if (i == -1)
-		return (puterr("usage: ls [-Ralrt] [file ...]\n"));
+		return (puterr("usage: ls [-"OPTIONS"] [file ...]\n"));
 	if (i == ac)
 	{
 		ft_ls(options, ".");
