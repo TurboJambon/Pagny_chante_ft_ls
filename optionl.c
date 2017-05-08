@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 13:58:02 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/08 17:07:14 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/08 17:37:12 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void		printtype(int type)
 void		printl(struct stat stats, int type, char *name, t_options options)
 {
 	ft_mode(stats.st_mode);
-//	printacl(av, folder.name);
 	ft_putstr_buf("\t");
 	ft_putnbr_buf(stats.st_nlink);
 	ft_putstr_buf("\t");
@@ -64,7 +63,6 @@ void		printl(struct stat stats, int type, char *name, t_options options)
 	ft_putstr_buf(name);
 	ft_putstr_buf(RESET);
 }
-
 
 void		ft_optl(t_dir folder, char *av, t_options options)
 {

@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/08 17:31:40 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/08 17:36:25 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	lsfile(char *av, t_options options)
 {
 	struct stat			stats;
 	char				*str;
-	int 				type;
+	int					type;
 
 	printerr(av, errno, options.l);
 	if (errno == 13)
@@ -40,7 +40,6 @@ void	lsfile(char *av, t_options options)
 	if (options.l)
 	{
 		str = ft_strjoinspe(getpath(av), ft_strrchr(av, '/'));
-
 		lstat(str, &stats);
 		type = typestat(stats);
 		printtype(type);
