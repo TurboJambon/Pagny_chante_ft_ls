@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/08 17:30:04 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/08 17:31:40 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	lsfile(char *av, t_options options)
 		printtype(type);
 		printl(stats, type, av, options);
 		free(str);
-		ft_putchar_buf('\n');
+		ft_putstr_buf("\n\n");
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:00:10 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/08 16:17:00 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/08 17:31:59 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void				ft_ls(t_options options, char *av)
 	path = NULL;
 	if (!(dir = opendir(av)))
 	{
-		lsfile(av, options, dir);
+		lsfile(av, options);
 		return ;
 	}
 	folder = NULL;
