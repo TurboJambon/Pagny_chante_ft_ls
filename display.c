@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niragne <niragne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 18:50:42 by niragne          ###   ########.fr       */
+/*   Updated: 2017/05/08 16:19:05 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	lsfile(char *av, t_options options, DIR *dir)
 	struct dirent		*read;
 	struct stat			stats;
 	char				*str;
-	static char			type[13] = "?fc-d-b---l-s";
 
 	printerr(av, errno, options.l);
 	if (errno == 13)
@@ -45,7 +44,7 @@ void	lsfile(char *av, t_options options, DIR *dir)
 		{
 			if (ft_strcmp(read->d_name, av) == 0)
 			{
-				ft_putchar_buf(type[read->d_type]);
+				printtype(read->d_type);
 				str = ft_strjoinspe(getpath(av), read->d_name);
 				read->d_type == 10 ? lstat(str, &stats) : stat(str, &stats);
 				printl(stats, read->d_type, read->d_name, options);

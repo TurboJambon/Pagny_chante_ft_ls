@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/05/05 18:15:14 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/08 15:33:50 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <errno.h>
 # include <sys/types.h>
 # include <sys/acl.h>
+# include <sys/xattr.h>
+# include <sys/types.h>
 
 # define OPTIONS "Rafglprtu"
 # define RED   "\x1B[31m"
@@ -37,6 +39,7 @@
 # define WHT   "\x1B[37m"
 # define RESET "\x1B[0m"
 # define OPT 	t_options
+# define ERR_JSP 20
 
 typedef unsigned long int		t_ulint;
 typedef unsigned char			t_uchar;
@@ -110,5 +113,6 @@ t_dir				*ft_optionu(t_dir *folder, char *path, int a, int len);
 void				del_options(t_options *options);
 void				ft_putchar_buf_fd(char c, int fd);
 void				ft_putcharendl_buf_fd(char c, int fd);
+void				printtype(int type);
 
 #endif
