@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 14:26:34 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/05 16:04:31 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/08 18:00:35 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	afftab(char **tab, int k)
 	}
 }
 
-void	ft_sort_spe(char **tab, int ac, int k)
+void	ft_sort_spe(char **tab, int ac, int k, t_options options)
 {
 	struct stat			stats;
 	char				sort[ac - 1];
@@ -85,12 +85,25 @@ void	ft_sort_spe(char **tab, int ac, int k)
 	{
 		flag = 0;
 		i = 0;
-		while (i < ac - k - 1)
+		if (!options.r)
 		{
-			if (sort[i] > sort[i + 1] || (ft_strcmp(tab[i], tab[i + 1]) > 0
-				&& sort[i] == sort[i + 1]))
-				flag = swapparam(tab + i, sort + i);
-			i++;
+			while (i < ac - k - 1)
+			{
+				if (sort[i] > sort[i + 1] || (ft_strcmp(tab[i], tab[i + 1]) > 0
+					&& sort[i] == sort[i + 1]))
+					flag = swapparam(tab + i, sort + i);
+				i++;
+			}
+		}
+		if (options.r)
+		{
+			while (i < ac - k - 1)
+			{
+				if (sort[i] < sort[i + 1] || (ft_strcmp(tab[i], tab[i + 1]) < 0
+					&& sort[i] == sort[i + 1]))
+					flag = swapparam(tab + i, sort + i);
+				i++;
+			}
 		}
 	}
 }

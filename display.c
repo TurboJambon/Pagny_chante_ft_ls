@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/08 17:36:25 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/08 17:47:11 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	lsfile(char *av, t_options options)
 	if (options.l)
 	{
 		str = ft_strjoinspe(getpath(av), ft_strrchr(av, '/'));
-		lstat(str, &stats);
+		str == NULL ? lstat(av, &stats) : lstat(str, &stats);
 		type = typestat(stats);
 		printtype(type);
 		printl(stats, type, av, options);
