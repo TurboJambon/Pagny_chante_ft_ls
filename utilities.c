@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 18:37:16 by dchirol           #+#    #+#             */
-/*   Updated: 2017/04/24 20:41:57 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/08 17:28:42 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,3 +93,26 @@ t_dir		*ft_folder(t_options options, char *path, int len, int i)
 	closedir(dir);
 	return (ret);
 }
+
+int		typestat(struct stat stats)
+{
+	int type;
+
+	type = 0;
+	if ((stats.st_mode & S_IFDIR) > 0)
+		type = 4;
+	else if ((stats.st_mode & S_IFREG) > 0)
+		type = 3;
+	else if ((stats.st_mode & S_IFCHR) > 0)
+		type = 2;
+	else if ((stats.st_mode & S_IFBLK) > 0)
+		type = 6;
+	else if ((stats.st_mode & S_IFIFO) > 0)
+		type = 1;
+	else if ((stats.st_mode & S_IFLNK) > 0)
+		type = 10;
+	else if ((stats.st_mode & S_IFSOCK) > 0)
+		type = 12;
+	return (type);
+}
+

@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:15:46 by David             #+#    #+#             */
-/*   Updated: 2017/05/08 15:33:50 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/08 17:27:14 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # include <sys/types.h>
 # include <sys/acl.h>
 # include <sys/xattr.h>
-# include <sys/types.h>
 
 # define OPTIONS "Rafglprtu"
 # define RED   "\x1B[31m"
@@ -103,7 +102,7 @@ void				options_r(t_options options, t_dir *folder,
 					char *av, char *path);
 void				printmult(char *av);
 t_dir				*ft_sort_dirname(t_dir *folder, size_t len);
-void				lsfile(char *av, t_options options, DIR *dir);
+void				lsfile(char *av, t_options options);
 void				ft_sort_spe(char **tab, int ac, int k);
 char				*getpath(char *path);
 t_dir				*ft_sort_dirname(t_dir *folder, size_t len);
@@ -114,5 +113,6 @@ void				del_options(t_options *options);
 void				ft_putchar_buf_fd(char c, int fd);
 void				ft_putcharendl_buf_fd(char c, int fd);
 void				printtype(int type);
+int					typestat(struct stat stats);
 
 #endif

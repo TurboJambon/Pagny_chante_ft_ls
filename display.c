@@ -6,7 +6,7 @@
 /*   By: dchirol <dchirol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 22:51:03 by dchirol           #+#    #+#             */
-/*   Updated: 2017/05/08 16:19:05 by dchirol          ###   ########.fr       */
+/*   Updated: 2017/05/08 17:30:04 by dchirol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,25 @@ void	ft_displayname(t_dir folder, t_options options)
 		ft_putchar_buf('/');
 }
 
-void	lsfile(char *av, t_options options, DIR *dir)
+void	lsfile(char *av, t_options options)
 {
-	struct dirent		*read;
 	struct stat			stats;
 	char				*str;
+	int 				type;
 
 	printerr(av, errno, options.l);
 	if (errno == 13)
 		return ;
 	if (options.l)
 	{
-		dir = opendir(getpath(av));
-		while ((read = readdir(dir)))
-		{
-			if (ft_strcmp(read->d_name, av) == 0)
-			{
-				printtype(read->d_type);
-				str = ft_strjoinspe(getpath(av), read->d_name);
-				read->d_type == 10 ? lstat(str, &stats) : stat(str, &stats);
-				printl(stats, read->d_type, read->d_name, options);
-				free(str);
-				ft_putchar_buf('\n');
-			}
-		}
+		str = ft_strjoinspe(getpath(av), ft_strrchr(av, '/'));
+
+		lstat(str, &stats);
+		type = typestat(stats);
+		printtype(type);
+		printl(stats, type, av, options);
+		free(str);
+		ft_putchar_buf('\n');
 	}
 }
 
